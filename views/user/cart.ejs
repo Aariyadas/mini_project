@@ -1,0 +1,310 @@
+<!-- END nav -->
+<% if(isLoggedIn){ %>
+	<%- include("../layouts/header.ejs") %>
+	  <% }else{ %>
+		<%- include('../layouts/guestHeader.ejs') %>
+		  <%}%>
+
+<div class="hero-wrap hero-bread" style="background-image: url(assets/upload/Background.jpg);">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p> -->
+        <h1 class="mb-0 bread">My Cart</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% if(cartProducts.item.length === 0) {%>
+
+<div class="container" style="display: flex; justify-content: center;">
+  <img src="assets/upload/96758-empty-cart.gif" alt="">
+</div>
+
+<% } else { %>
+<section class="ftco-section ftco-cart">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 ftco-animate">
+        <div class="cart-list">
+          <table class="table">
+            <thead class="thead-primary">
+              <tr class="text-center">
+                <th></th>
+                <th>&nbsp;</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%if(id){%>
+              <% for(let key of cartProducts.item){%>
+
+              <tr class="text-center">
+                <td class="product-remove"><a href="/deletecart?id=<%=key.productId._id %>"><span class="ion-ios-close"></span></a>
+                </td>
+                <td class="image-prod">
+                  <div class="img">
+
+                    <img src="/banners/<%=key.productId.image[0] %>" alt="img" width="135vw" height="175vh">
+                  </div>
+                </td>
+
+                <td class="product-name">
+                  <h3>
+                    <%=key.productId.name %>
+                  </h3>
+
+                </td>
+
+                <td class="price">
+                  <%=key.productId.price %>
+                </td>
+
+
+                <td class="quantity">
+                  <div class="input-group mb-3">
+                    <input type="hidden" id="productId" value="<%= key.productId._id %> %>">
+                    <input type="number" name="quantity" class="quantity form-control input-number qty" value="<%= key.qty %>" min="1" max="10">
+                  </div>
+                </td>
+
+                <td class="total">
+                  <%=key.productId.price*key.qty%>
+                </td>
+              </tr><!-- END TR-->
+              <%}} else{%>
+              Product not Found
+              <%}%>
+													
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+						<form class="mb-5" action="/add-coupon" method="post">
+						<div class="cart-total mb-3">
+							<h3>Cart Totals</h3>
+							<p class="d-flex">
+								<span>Subtotal</span>
+								<span id="sellingPrice">
+									<% if(id){ %>
+              ₹ <%= cartProducts.totalPrice %>
+              <% } %>
+              </span>
+              </p>
+              <p class="d-flex">
+                <span>Coupon Name</span>
+                <span id="" name="name">
+                  <% if(offer) { %>
+                  <%= offer.name %>
+                  <% } %>
+                </span>
+
+
+              </p>
+              <p class="d-flex">
+                <span>Discount</span>
+                <span id="" name="name">
+                  <% if(offer) { %>
+                  <%= offer.discount %>%
+                  <% } %>
+                </span>
+
+
+              </p>
+
+              <div>
+
+                <input type="text" class="form-control input-shadow" name="offer" placeholder="Enter Code" id="input">
+				<div class="d-flex" style="display: flex; align-items: center;">
+				<button id="btn" class="btn btn-danger mt-2 mr-l-5  px-2">Apply coupon</button>
+                
+                    <% if(couponData){ %>
+                    <% for(let key of couponData){ %>
+                    <h6 class="text-center ml-5" ><%=key.name%></h6>
+
+                    <% }} %>
+                  
+                </div>
+              </div>
+              <section id="message" class="text-danger">
+
+              </section>
+              <hr>
+              <p class="d-flex total-price">
+                <span>Total</span>
+                <span id="sellingPric">
+                  ₹ <%= couponTotal%>
+                </span>
+
+              </p>
+
+        </div>
+        </form>
+        <% if(noCoupon===true){%>
+        <p style="color:red"> Already Used</p>
+        <%}%>
+						<div class="size-209 p-t-1">
+							<span class="mtext-110 cl2">
+	
+							</span>
+						</div>
+						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
+								Checkout</a></p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<% } %>
+
+        <%- include('../layouts/footer.ejs') %>
+
+
+
+        <!-- loader -->
+        <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+          </svg></div>
+
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/jquery.easing.1.3.js"></script>
+        <script src="/assets/js/jquery.waypoints.min.js"></script>
+        <script src="/assets/js/jquery.stellar.min.js"></script>
+        <script src="/assets/js/owl.carousel.min.js"></script>
+        <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/js/aos.js"></script>
+        <script src="/assets/js/jquery.animateNumber.min.js"></script>
+        <script src="/assets/js/bootstrap-datepicker.js"></script>
+        <script src="/assets/js/scrollax.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <script src="/assets/js/google-map.js"></script>
+        <script src="/assets/js/main.js"></script>
+
+        <script>
+          // $(document).ready(function () {
+
+          // 	var quantitiy = 0;
+          // 	$('.quantity-right-plus').click(function (e) {
+
+          // 		// Stop acting like a button
+          // 		e.preventDefault();
+          // 		// Get the field name
+          // 		var quantity = parseInt($('#quantity').val());
+
+          // 		// If is not undefined
+
+          // 		$('#quantity').val(quantity + 1);
+
+
+          // 		// Increment
+
+          // 	});
+
+          // 	$('.quantity-left-minus').click(function (e) {
+          // 		// Stop acting like a button
+          // 		e.preventDefault();
+          // 		// Get the field name
+          // 		var quantity = parseInt($('#quantity').val());
+
+          // 		// If is not undefined
+
+          // 		// Increment
+          // 		if (quantity > 0) {
+          // 			$('#quantity').val(quantity - 1);
+          // 		}
+          // 	});
+
+          // });
+
+          // Cart Quantity--------------------
+
+          const qty = document.querySelectorAll('.qty')
+          const qtyHandler = async (e) => {
+            try {
+              const productId = e.target.parentElement.children[0].value
+              const data = {
+                qty: e.target.value
+              }
+              const response = await fetch(`/changeProductQnty?id=${productId}`, {
+                method: 'post',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              })
+              const value = await response.json()
+              document.querySelector('#sellingPrice').innerText = value.totalPrice
+              e.target.parentElement.parentElement.nextElementSibling.innerText = value.price * e.target.value
+              document.querySelector('#sellingPric').innerText = value.totalPrice
+            } catch (error) {
+              console.log(error.message);
+            }
+          }
+          qty.forEach(q => {
+            q.addEventListener('change', qtyHandler)
+          })
+
+
+
+          // Coupon Apply------------
+
+          // 	const apply = document.querySelector("#btn")
+          //     const applyCoupen = async ()=>{
+          //         const coupen = document.querySelector("#input").value
+          //         data = {coupen:coupen}
+          //         console.log(data);
+          //         try {
+          //             const response = await fetch(`/coupenApply?coupen=${coupen}`,{
+          //              method:'post',
+          //              headers:{'Content-Type':'application/json'},
+          //               body:JSON.stringify(data)
+          //             })
+          //             const value = await response.json()
+          //             console.log(value); 
+
+          //             if (value.coupenAmount) {
+          //                 document.querySelector('#message').innerHTML= ""
+          //                 document.querySelector('#coupenAmt').innerText = value.coupenAmount
+          //                 document.querySelector('#sellingPrice').innerText = value.cartTotal-value.coupenAmount
+          //             }else if (value.a) {
+          //                 document.querySelector('#message').innerHTML = "<p>Expired Coupen</p>"
+          //                 document.querySelector('#coupenAmt').innerText = ""
+          //                 document.querySelector('#sellingPrice').innerText = ""
+          //             }else if(value.b){
+          //                 document.querySelector('#coupenAmt').innerText = ""
+          //                 document.querySelector('#sellingPrice').innerText = ""
+          //                 document.querySelector('#message').innerHTML += `<p>Need ${value.cartTotal-value.minAmt} ₹ more to Apply Coupen</p>`
+          //             }
+          //             else{
+          //                 document.querySelector('#message').innerHTML = "<p>Invalid Coupen</p>"
+          //                 document.querySelector('#coupenAmt').innerText = ""
+          //                 document.querySelector('#sellingPrice').innerText = ""
+          //             }
+
+          //         } catch (error) {
+          //             console.log(error.message);
+          //         }
+
+          //     }
+          //     apply.addEventListener('click',applyCoupen)
+
+          // 
+        </script>
+
+        </script>
+
+        </body>
+
+        </html>

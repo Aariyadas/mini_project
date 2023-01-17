@@ -1,0 +1,128 @@
+
+<% if(isLoggedIn){ %>
+    <%- include("../layouts/header.ejs") %>
+      <% }else{ %>
+        <%- include('../layouts/guestHeader.ejs') %>
+          <%}%>
+
+<div class="hero-wrap hero-bread mt-3" style="background-image: url('assets/upload/Background.jpg')">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-0 bread"><%= categor%> </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="mt-5 mb-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-10 order-md-last">
+                <div class="row">
+					<!-- Products -->
+                    <% if(products.length > 0){
+                        for(let i=0; i<products.length ;i++){ %>
+                            <div class="col-sm-6 col-md-6 col-lg-3 ftco-animate">
+                                <div class="product">
+                                    <a href="/singleProduct?id=<%= products[i]._id%>" class="img-prod"
+                                        ><img class="img-fluid" src="/banners/<%= products[i].image[0]%>" alt="Colorlib Template" />
+                                        <% if(products[i].offer != 0){
+                                            %>
+                                            <span class="status"><%= products[i].offer %>%</span>
+                                        <% } %>
+                                        <div class="overlay"></div>
+                                    </a>
+                                    <div class="text py-3 px-3 shadow">
+                                        <h3><a href="#"><%= products[i].name %> </a></h3>
+                                        <div class="d-flex">
+                                            <div class="pricing">
+                                                <p class="price">
+                                                 <span class="price-sale ">₹<%=  products[i].price %></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p class="bottom-area d-flex px-3">
+                                            <% if(userData.length==0){%>
+                
+                                            <a href="/login" class="add-to-cart text-center py-2 mr-1"
+                                                ><span>Add to cart <i class="ion-ios-add ml-1"></i></span>
+                                            </a>
+                                            <a href="/login" class="buy-now text-center py-2"
+                                                >Buy now<span><i class="ion-ios-cart ml-1"></i></span>
+                                            </a>
+        
+                                            <%}else{%> 
+                                            <a href="/addToCart?id=<%= products[i].id%>" class="add-to-cart text-center py-2 mr-1"
+                                                ><span>Add to cart <i class="ion-ios-add ml-1"></i></span>
+                                            </a>
+                                            <a href="#" class="buy-now text-center py-2"
+                                                >Buy now<span><i class="ion-ios-cart ml-1"></i></span>
+                                            </a>
+                                                
+                                            <%} %>        
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <%}
+                    }else{%>
+                        <p>products not Found</p>
+                    <%}%> 
+				
+                </div>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li><a href="#">&lt;</a></li>
+                                <li class="active"><span>1</span></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&gt;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-2 sidebar">
+                <div class="sidebar-box-2">
+                    <h2 class="heading mb-4"><a href="#">Category</a></h2>
+                    <ul>
+                        <% if(category.length>0){
+                            for(let i=0;i<category.length;i++){%>
+                                
+                                <li><a href="/categoryProduct?category=<%= category[i].tittle %>"><%= category[i].tittle%> </a></li>
+                                
+                            <%}
+                        }else{%>
+                            <p>Categories Not Found </p>
+                        <%}%>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include("../layouts/footer.ejs") %>
+<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.easing.1.3.js"></script>
+		<script src="/assets/js/jquery.waypoints.min.js"></script>
+		<script src="/assets/js/jquery.stellar.min.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/aos.js"></script>
+		<script src="/assets/js/jquery.animateNumber.min.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/js/scrollax.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+		<script src="/assets/js/google-map.js"></script>
+		<script src="/assets/js/main.js"></script>

@@ -1,0 +1,78 @@
+<%- include("../layouts/adminHeader.ejs") %>
+
+<div class="container mt-5">
+  <div class="row bootstrap snippets bootdeys">
+    <div class="col-md-8 col-sm-12">
+      <div class="">
+        <div class="panel panel-info">
+          <div class="panel-heading text-center">
+            <h3>Banner Management</h3>
+          </div>
+          <div class="panel-body">
+            <% if(typeof message!="undefined" ){ %>
+            <p class="text-danger">
+              <%= message %>
+            </p>
+            <%}%>
+                                    <form action="/admin/loadBanners" method="post" enctype="multipart/form-data">
+                                        <input type="text" name="banner" placeholder="Banner Name">
+                                        <input type="file" name="bannerImage" multiple />
+                                        <button type="submit" class="btn btn-info mt-3">Upload</button>
+                                        <hr />
+                                    </form>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">SI</th>
+                                                <th scope="col">Banner Name</th>
+                                                <th scope="col">Banner Images</th>
+                                                <!-- <th scope="col">Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if(banners.length>0){
+                                                for(let i=0;i<banners.length;i++){ %>
+            <tr>
+              <td>
+                <%= i+1 %>
+              </td>
+              <td>
+                <%= banners[i].banner%>
+              </td>
+
+              <td class="">
+                <div style="width: 35px; height: 50px;">
+                  <img src="/banners/<%= banners[i].bannerImage[0]%>" alt="" class="img-fluid">
+                  <img src="/banners/<%= banners[i].bannerImage[1]%>" alt="" class="img-fluid">
+                </div>
+              </td>
+
+              <td>
+                <% if(banners[i].is_active==1) { %>
+                <img style="width: 1.6vw" src="/assets/upload/greenmark.png" />
+                <% } else { %>
+
+                <% } %>
+              </td>
+              <td>
+
+
+                <a href="/admin/currentBanner?id=<%= banners[i]._id %>" class="btn btn-primary"> Choose </a>
+
+              </td>
+
+            </tr>
+            <%} } else{ %>
+            <tr>
+              <td colspan="5">Banner not found</td>
+            </tr>
+            <% } %>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,442 @@
+
+    <!-- END nav -->
+    <% if(isLoggedIn){ %>
+      <%- include("../layouts/header.ejs") %>
+        <% }else{ %>
+          <%- include('../layouts/guestHeader.ejs') %>
+            <%}%>
+
+
+    
+              <body class="goto-here">
+    
+    <section id="home-section" class="hero">
+      <div class="home-slider js-fullheight owl-carousel">
+        <% if(banners.length> 0){
+          for(let i=0; i<banners.length;i++ ){%>
+            <div class="slider-item js-fullheight">
+              <div class="overlay"></div>
+              <div class="container-fluid p-0">
+                <div class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
+                  data-scrollax-parent="true">
+                  <div class="one-third order-md-last img js-fullheight"
+                    style="background-image:url('banners/<%= banners[0].bannerImage[1]%>');">
+                  </div>
+                  <div class="one-forth d-flex js-fullheight align-items-center ftco-animate"
+                    data-scrollax=" properties: { translateY: '20%' }">
+                    <div class="text">
+                      <span class="subheading">Bellinda Botique</span>
+                      <div class="horizontal">
+                        <h3 class="vr"
+                          style="background-image: url(images/divider.jpg);">
+                          Stablished Since 2000</h3>
+                        <h1 class="mb-4 mt-3">Catch Your Own <br><span>Stylish
+                            &amp; Look</span></h1>
+                        <p></p> 
+
+                        <p><a href="#"
+                            class="btn btn-primary px-5 py-3 mt-3">Discover
+                            Now</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slider-item js-fullheight">
+              <div class="overlay"></div>
+              <div class="container-fluid p-0">
+                <div class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end"
+                  data-scrollax-parent="true">
+                  <div class="one-third order-md-last img js-fullheight"
+                    style="background-image:url('banners/<%= banners[0].bannerImage[0]%>');">
+                  </div>
+                  <div class="one-forth d-flex js-fullheight align-items-center ftco-animate"
+                    data-scrollax=" properties: { translateY: '70%' }">
+                    <div class="text">
+                      <span class="subheading">Bellinda Botique</span>
+                      <div class="horizontal">
+                        <h3 class="vr"
+                          style="background-image: url(images/divider.jpg);">
+                          Fashion Botique</h3>
+                        <h1 class="mb-4 mt-3">A Thouroughly <span>Modern</span>
+                          Woman</h1>
+                        <p></p> 
+
+                        <p><a href="/viewProducts"
+                            class="btn btn-primary px-5 py-3 mt-3">Shop
+                            Now</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%}}%>
+      </div>
+    </section>
+
+    
+
+    <section class="ftco-section bg-light">
+    	<div class="container">
+				<div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <h2 class="mb-4">Best Sellers</h2>
+            <p>A line-up of star-inspired Sarees that are in the limelight right now!</p>
+          </div>
+        </div>   		
+    	</div>
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/LN1.webp" alt="Colorlib Template">
+    						<span class="status">30%</span>
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">BLUE EMBROIDERED LEHENGA SET
+</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span class="mr-2 price-dc">₹20000</span><span class="price-sale">₹16000</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+	    					<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/SN1.webp" alt="Colorlib Template">
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">MIDNIGHT BLUE EMBROIDERED SAREE 
+</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>₹10000</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/Kurtha21.webp" alt="Colorlib Template">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">GREEN COTTON SILK KURTA SET</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>₹5500</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/An11.webp" alt="Colorlib Template">
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">RED CREPE EMBROIDERED ANARKALI SET</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>$120.00</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+    
+  
+
+    <section class="ftco-section bg-light">
+    	<div class="container">
+				<div class="row justify-content-center mb-3 pb-3">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <h2 class="mb-4">Products</h2>
+            <p>A line-up of star-inspired Dresses that are in the limelight right now</p>
+          </div>
+        </div>   		
+    	</div>
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/LN1.webp" alt="Colorlib Template">
+    						<span class="status">30%</span>
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">RED EMBROIDERED LEHENGA SET</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span class="mr-2 price-dc">₹28000</span><span class="price-sale">₹25000</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/SN41.webp" alt="Colorlib Template">
+	    					<div class="overlay"></div>
+	    				</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">MOUSE BROWN EMBELLISHED DRAPED SAREE </a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>₹12000</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/KN11.webp" alt="Colorlib Template">
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">PURPLE HAND EMBROIDERED KURTA SET</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>₹6500</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="assets/upload/SareeN21.webp" alt="Colorlib Template">
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">MAROON EMBROIDERED SAREE SET
+</a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price"><span>15000</span></p>
+		    					</div>
+		    					<div class="rating">
+	    							<p class="text-right">
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    								<a href="#"><span class="ion-ios-star-outline"></span></a>
+	    							</p>
+	    						</div>
+	    					</div>
+    						<p class="bottom-area d-flex px-3">
+    							<a href="/viewProducts" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+    						</p>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+    
+		<section class="ftco-section-parallax">
+      <div class="parallax-img d-flex align-items-center">
+        <div class="container">
+          <div class="row d-flex justify-content-center py-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+              <h2>Subcribe to our Newsletter</h2>
+              <div class="row d-flex justify-content-center mt-5">
+                <div class="col-md-8">
+                  <form action="#" class="subscribe-form">
+                    <div class="form-group d-flex">
+                      <input type="text" class="form-control" placeholder="Enter email address">
+                      <input type="submit" value="Subscribe" class="submit px-3">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="ftco-footer bg-light ftco-section">
+      <div class="container">
+      	<div class="row">
+      		<div class="mouse">
+						<a href="#" class="mouse-icon">
+							<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+						</a>
+					</div>
+      	</div>
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Bellinda</h2>
+              <p>A line-up of star-inspired Sarees that are in the limelight right now!</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Menu</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Shop</a></li>
+                
+                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Help</h2>
+              <div class="d-flex">
+	              <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+	                <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
+	                <li><a href="#" class="py-2 d-block">Returns</a></li>
+	               
+	                
+	              </ul>
+	              
+	            </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">Trivandrum ,Kerala</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">customercare@gmail.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Bellinda <i class="icon-heart color-danger" aria-hidden="true"></i> </a>
+						
+						</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  

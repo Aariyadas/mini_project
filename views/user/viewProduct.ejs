@@ -1,0 +1,132 @@
+
+ <% if(isLoggedIn){ %>
+  <%- include("../layouts/header.ejs") %>
+    <% }else{ %>
+      <%- include('../layouts/guestHeader.ejs') %>
+        <%}%>
+
+  <div class="hero-wrap hero-bread" style="background-image: url('assets/upload/Background.jpg');">
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
+            <h1 class="mb-0 bread">Collection Products</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  <section class="ftco-section bg-light">
+    <div class="container">
+		<div class="row">
+			<% if(productShop.length>0){ %> 
+			<% for(let i=0;i<productShop.length;i++) {%>
+			<div class="col-md-4 col-lg-4 order-md-last">
+				<div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-6 ftco-animate">
+              <div class="product" style="width:300px;">
+                <a href="/singleProduct?id=<%=productShop[i]._id%>" class="img-prod"><img class="img-fluid" src="/banners/<%=productShop[i].image[0]%>" alt="Colorlib Template">
+                </a>
+                
+                <div class="text py-3 px-3">
+                  <h3 class="card-tittle">
+                    <%=productShop[i].name %>
+                  </h3>
+                  <div><a href="/addToWishlist?id=<%=productShop[i]._id %>"><span class="icon ion-md-heart"></span></a></div>
+                  <div class="d-flex">
+                    <div class="pricing">
+                      <p class="price"><span>₹<%= productShop[i].price %>
+                          /-</span>
+                      </p>
+
+                    </div>
+                    <div class="rating">
+                      <p class="text-right">
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                        <a href="#"><span class="ion-ios-star-outline"></span></a>
+                      </p>
+                    </div>
+                  </div>
+
+                  <p class="bottom-area d-flex px-3">
+                    <a href="/addToCart?id=<%=productShop[i]._id%>" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                    <a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <% } %>
+		<% }else{%>
+			<h1>no product in database</h1>
+			<% } %>
+      </div>
+    </div>
+	<div class="row mt-5">
+	  <div class="col text-center">
+		  <div class="block-27">
+			  <ul>
+				  <li><a href="?page=<%= previous %>">&lt;</a></li>
+				  
+				  
+  
+  
+				  <% for(let i=1; i<=totalPages; i++) { %>
+					  <% if(currentPage==i) { %>
+						  <li class="active">
+							  <a  href="?page=<%= i %>">
+								  <%= i %>
+							  </a>
+						  </li>
+						  <% } else { %>
+							  <li class="" >
+								  <a class="" href="?page=<%= i %>">
+									  <%= i %>
+								  </a>
+							  </li>
+							  <% } %>
+								  <% } %>
+  
+								  <li><a href="?page=<%= next %>">&gt;</a></li>
+			  </ul>
+		  </div>
+	  </div>
+  </div>
+  </section>
+
+
+  <%- include('../layouts/footer.ejs') %>
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+    </svg></div>
+
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.easing.1.3.js"></script>
+  <script src="/assets/js/jquery.waypoints.min.js"></script>
+  <script src="/assets/js/jquery.stellar.min.js"></script>
+  <script src="/assets/js/owl.carousel.min.js"></script>
+  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="/assets/js/aos.js"></script>
+  <script src="/assets/js/jquery.animateNumber.min.js"></script>
+  <script src="/assets/js/bootstrap-datepicker.js"></script>
+  <script src="/assets/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="/assets/js/google-map.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Bellinda</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+	<link rel="stylesheet" href="/assets/css/animate.css">
+
+	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+	<link rel="stylesheet" href="/assets/css/aos.css">
+
+	<link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body class="goto-here">
+	
+	<%- include('../layouts/header.ejs') %>
+
+
+	<div class="hero-wrap hero-bread" style="background-image: url('assets/upload/Background.jpg');">
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-center justify-content-center">
+				<div class="col-md-9 ftco-animate text-center">
+					<p class="breadcrumbs"><span class="mr-2"><a href="/wishlist">Home</a></span> <span>Wishlist</span></p>
+					<h1 class="mb-0 bread">Wishlist</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="ftco-section ftco-cart">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 ftco-animate">
+					<div class="cart-list">
+						<table class="table">
+							<thead class="thead-primary">
+								<tr class="text-center">
+									<th></th>
+									<th>&nbsp;</th>
+									<th>Product</th>
+									<th>Price</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<%if(id){%>
+									<% for(let key of wishlistProducts.item){%>
+
+										<tr class="text-center">
+											<td class="product-remove"><a
+													href="/deleteWishlist?id=<%=key.productId._id%>"><span
+														class="ion-ios-close"></span></a>
+														<a href="/addtocart-deletewishlist?id=<%=key.productId._id%>">Add to Cart</a>
+											</td>
+											<td class="image-pro">
+												<div class="img">
+
+													<img src="/banners/<%=key.productId.image[0]%>" alt="img"
+													width="125vw" height="170vh">
+												</div>
+											</td>
+
+											<td class="product-name">
+												<h3>
+													<%=key.productId.name %>
+												</h3>
+
+											</td>
+
+											<td class="price">
+												<%=key.productId.price %>
+											</td>
+
+											<!-- <td class="quantity">
+												<%=key.qty%>
+											</td> -->
+
+											<!-- <td class="total">
+												<%=key.productId.price*key.qty%>
+											</td> -->
+										</tr><!-- END TR-->
+										<%}} else{%>
+											productData not Found
+											<%}%>
+												<!-- <tr class="text-center">
+										<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a>
+										</td>
+
+										<td class="image-prod">
+											<div class="img"
+												style="background-image:url(/assets/images/product-4.jpg);"></div>
+										</td>
+
+										<td class="product-name">
+											<h3></h3>
+											<p>Far far away, behind the word mountains, far from the countries</p>
+										</td>
+
+										<td class="price">$15.70</td>
+
+										<td class="quantity">
+											<div class="input-group mb-3">
+												<input type="text" name="quantity"
+													class="quantity form-control input-number" value="1" min="1"
+													max="100">
+											</div>
+										</td>
+
+										<td class="total">$15.70</td>
+									</tr>END TR -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="row justify-content-center">
+				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+					<div class="cart-total mb-3">
+						<h3>Cart Totals</h3>
+						<p class="d-flex">
+							<span>Subtotal</span>
+							<span>
+								<% if(id){ %>
+									₹ <%= wishlistProducts.totalPrice %>
+										<% } %>
+							</span>
+						</p>
+						<p class="d-flex">
+							<span>Delivery</span>
+							<span>$0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Discount</span>
+							<span>$3.00</span>
+						</p>
+						<div>
+							<input type="text" class="form-control input-shadow" placeholder="Enter Code">
+							<button value="submit"  class="btn btn-danger py-3 px-4">Apply coupon</button>
+						</div>
+						<hr>
+						<p class="d-flex total-price">
+							<span>Total</span>
+							<span>
+								<% if(id){ %>
+									₹ <%= wishlistProducts.totalPrice %>
+										<% } %>
+							</span>
+						</p>
+
+					</div>
+					<div class="size-209 p-t-1">
+						<span class="mtext-110 cl2">
+
+						</span>
+					</div>
+					<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
+							Checkout</a></p>
+				</div>
+			</div> -->
+		</div>
+	</section>
+
+	
+  
+	<%- include('../layouts/footer.ejs') %>
+
+
+
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+				stroke="#F96D00" />
+		</svg></div>
+
+
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script src="/assets/js/jquery.easing.1.3.js"></script>
+	<script src="/assets/js/jquery.waypoints.min.js"></script>
+	<script src="/assets/js/jquery.stellar.min.js"></script>
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="/assets/js/aos.js"></script>
+	<script src="/assets/js/jquery.animateNumber.min.js"></script>
+	<script src="/assets/js/bootstrap-datepicker.js"></script>
+	<script src="/assets/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="/assets/js/google-map.js"></script>
+	<script src="/assets/js/main.js"></script>
+
+	<script>
+		$(document).ready(function () {
+
+			var quantitiy = 0;
+			$('.quantity-right-plus').click(function (e) {
+
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				$('#quantity').val(quantity + 1);
+
+
+				// Increment
+
+			});
+
+			$('.quantity-left-minus').click(function (e) {
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				// Increment
+				if (quantity > 0) {
+					$('#quantity').val(quantity - 1);
+				}
+			});
+
+		});
+	</script>
+
+</body>
+
+</html>

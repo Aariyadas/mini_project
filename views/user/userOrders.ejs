@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+    <title>Bellinda</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+  
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  
+    <link rel="stylesheet" href="/assets/css/aos.css">
+  
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+  
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+  
+  
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/dashboardStyle.css">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  </head>
+
+    
+    <%- include('../layouts/header.ejs') %>
+
+
+<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.easing.1.3.js"></script>
+		<script src="/assets/js/jquery.waypoints.min.js"></script>
+		<script src="/assets/js/jquery.stellar.min.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/aos.js"></script>
+		<script src="/assets/js/jquery.animateNumber.min.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/js/scrollax.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+		<script src="/assets/js/google-map.js"></script>
+		<script src="/assets/js/main.js"></script> 
+        <div class="profile-info col-md-9">
+            <!-- <div class="panel">
+                <form>
+                    <textarea placeholder="Whats in your mind today?" rows="2" class="form-control input-lg p-text-area"></textarea>
+                </form>
+                <footer class="panel-footer">
+                    <button class="btn btn-warning pull-right">Post</button>
+                    <ul class="nav nav-pills">
+                        <li>
+                            <a href="#"><i class="fa fa-map-marker"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-camera"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class=" fa fa-film"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-microphone"></i></a>
+                        </li>
+                    </ul>
+                </footer>
+            </div> -->
+            <div class="panel">
+              <div class="bio-graph-heading">
+                  <h1>ORDERS</h1>
+                  <h4>Welcome <%=user.name%></h4>
+              </div>
+            <table class=" table table-bordered text-center mb-0" style="background-color:gainsboro; border-color:black; ">
+                <% if(userOrders){%>
+              <thead class="bg-secondary text-dark">
+                  
+                  <!-- <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                      <div class="dropdown-menu rounded-0 mb-5">
+                          <a href="dashboard" class="dropdown-item">User Profile</a>
+                          <a href="orders" class="dropdown-item">orders</a>
+                          <a href="address" class="dropdown-item">Address</a>
+                      </div>
+                  </div> -->
+                  <tr>
+                      <th>Order Id</th> </th>
+                      <th>Time</th>
+                      <th>Payment</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+                  <% for(let key of userOrders) { %>
+                  <tbody class="align-middle">
+  
+                      <tr style="color: black;">
+                       
+                          <td class="align-middle"><%=key._id%></td>
+                          <td class="align-middle"><%=key.createdAt.toDateString()%></td>
+                          <td class="align-middle"><%=key.payment%></td>
+                          <td class="align-middle"><%=key.status%></td>
+                          <td class="align-middle"><a href="/cancelOrder?id=<%=key._id%>"><button class="btn btn-sm btn-danger">Cancel Order</button></a><br><br>
+                              <a href="/viewOrder?id=<%=key._id%>"><button class="btn btn-sm btn-primary">View Detail</button></a></td>
+                        
+                      </tr>
+                  </tbody>
+                  <% } %>
+              </thead>
+              <% } %>
+          </table>
+          <% else { %>
+            <p>No order has been made yet.</p>
+            <a href="/shop" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+            <%}%>
+          </div>
+            <!-- <div> -->
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value="35" data-fgcolor="#e06b7d" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(224, 107, 125); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                                <div class="bio-desk">
+                                    <h4 class="red">Envato Website</h4>
+                                    <p>Started : 15 July</p>
+                                    <p>Deadline : 15 August</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value="63" data-fgcolor="#4CC5CD" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(76, 197, 205); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                                <div class="bio-desk">
+                                    <h4 class="terques">ThemeForest CMS </h4>
+                                    <p>Started : 15 July</p>
+                                    <p>Deadline : 15 August</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value="75" data-fgcolor="#96be4b" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(150, 190, 75); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                                <div class="bio-desk">
+                                    <h4 class="green">VectorLab Portfolio</h4>
+                                    <p>Started : 15 July</p>
+                                    <p>Deadline : 15 August</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="bio-chart">
+                                    <div style="display:inline;width:100px;height:100px;"><canvas width="100" height="100px"></canvas><input class="knob" data-width="100" data-height="100" data-displayprevious="true" data-thickness=".2" value="50" data-fgcolor="#cba4db" data-bgcolor="#e8e8e8" style="width: 54px; height: 33px; position: absolute; vertical-align: middle; margin-top: 33px; margin-left: -77px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Arial; text-align: center; color: rgb(203, 164, 219); padding: 0px; -webkit-appearance: none; background: none;"></div>
+                                </div>
+                                <div class="bio-desk">
+                                    <h4 class="purple">Adobe Muse Template</h4>
+                                    <p>Started : 15 July</p>
+                                    <p>Deadline : 15 August</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+      </div>
+      </div>

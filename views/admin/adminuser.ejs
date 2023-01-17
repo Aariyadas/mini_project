@@ -1,0 +1,119 @@
+<%-include('../layouts/adminheader')%>
+
+  <div class="container mt-5 pt-5">
+    <div class="container-fluid mb-3 pb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="header">
+              <h4 class="title">Users List</h4>
+
+            </div>
+            <div class="content table-responsive table-full-width">
+              <table class="table table-striped">
+                <thead>
+                  <th class="border-top-0">SI NO</th>
+                  <th class="border-top-0">USER</th>
+                  <th class="border-top-0">E-mail</th>
+                  <th class="border-top-0">Mobile No</th>
+
+                  <th class="border-top-0">Status</th>
+                  <th class="border-top-0">ACTION</th>
+                </thead>
+                <tbody>
+                  <% if( users.length> 0){ %>
+                    <% for(let i=1;i <=users.length; i++){ %>
+                      <tr>
+                        <td>
+                          <%= i %>
+                        </td>
+
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div class="m-r-10"><a class="btn btn-circle d-flex btn-info text-white"><i
+                                  class=" mdi mdi-account-circle"></i></a>
+                            </div>
+                            <div class="">
+                              <h4 class="m-b-0 font-16">
+                                <%= users[i-1].name %>
+                              </h4>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <%= users[i-1].email %>
+                        </td>
+                         <td>
+                          <%= users[i-1].mobile %>
+                        </td> 
+                        <td>
+                          <% if(users[i-1].is_verified) { %>
+                            <label class="btn-success">
+                              <i class="m-r-10 mdi mdi-account">UnBlocked</i></label>
+                            <% } else { %>
+                              <label class="btn-danger">
+                                <i class="m-r-10 mdi mdi-account-off">Blocked</i></label>
+                              <% } %>
+                                </label>
+                        </td>
+
+                        <td>
+                          <!-- Default switch -->
+
+                          <% if(users[i-1].is_verified) { %>
+                            <a class="btn btn-danger text-white delete"
+                              href="/admin/blockUsers?id=<%= users[i-1]._id %> ">Block</a>
+                            <% } else { %>
+                              <a class="btn btn-info " href="/admin/blockUsers?id=<%= users[i-1]._id %> ">Unblock</a>
+                              <% } %>
+                        </td>
+                      </tr>
+                      <% } } else{ %>
+                        <tr>
+                          <td colspan="5">Users Not Found</td>
+                        </tr>
+                        <% } %>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+  <script>
+    $(".delete").on("click", function (e) {
+        e.preventDefault()
+        var self = $(this)
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Block',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // swalWithBootstrapButtons.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+                location.href=self.attr('href')
+            } 
+        })
+    })
+</script>
+

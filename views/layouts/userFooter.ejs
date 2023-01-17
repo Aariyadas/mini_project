@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Winkel - Free Bootstrap 4 Template by Colorlib</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+	<link rel="stylesheet" href="/assets/css/animate.css">
+
+	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+	<link rel="stylesheet" href="/assets/css/aos.css">
+
+	<link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+
+	<!-- END nav -->
+	<%- include('../layouts/header.ejs') %>
+
+	<div class="hero-wrap hero-bread" style="background-image: url(assets/upload/bg.jpg);">
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-center justify-content-center">
+				<div class="col-md-9 ftco-animate text-center">
+					<!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p> -->
+					<h1 class="mb-0 bread">My Cart</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="ftco-section ftco-cart">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 ftco-animate">
+					<div class="cart-list">
+						<table class="table">
+							<thead class="thead-primary">
+								<tr class="text-center">
+									<th></th>
+									<th>&nbsp;</th>
+									<th>Product</th>
+									<th>Price</th>
+									<th>Quantity</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%if(id){%>
+									<% for(let key of cartProducts.item){%>
+
+										<tr class="text-center">
+											<td class="product-remove"><a
+													href="/deletecart?id=<%=key.productId._id %>"><span
+														class="ion-ios-close"></span></a>
+											</td>
+											<td class="image-prod">
+												<div class="img">
+
+													<img src="/banners/<%=key.productId.image[0] %>" alt="img"
+														width="135vw" height="175vh">
+												</div>
+											</td>
+
+											<td class="product-name">
+												<h3>
+													<%=key.productId.name %>
+												</h3>
+
+											</td>
+
+											<td class="price">
+												<%=key.productId.price %>
+											</td>
+
+											<td class="quantity">
+												<%=key.qty%>
+											</td>
+
+											<td class="total">
+												<%=key.productId.price*key.qty%>
+											</td>
+										</tr><!-- END TR-->
+										<%}} else{%>
+											productData not Found
+											<%}%>
+												
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+					<div class="cart-total mb-3">
+						<h3>Cart Totals</h3>
+						<p class="d-flex">
+							<span>Subtotal</span>
+							<span>
+								<% if(id){ %>
+									₹ <%= cartProducts.totalPrice %>
+										<% } %>
+							</span>
+						</p>
+						<p class="d-flex">
+							<span>Delivery</span>
+							<span>$0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Discount</span>
+							<span>$3.00</span>
+						</p>
+						<div>
+							<input type="text" class="form-control input-shadow" placeholder="Enter Code">
+							<button value="submit"  class="btn btn-danger py-3 px-4">Apply coupon</button>
+						</div>
+						<hr>
+						<p class="d-flex total-price">
+							<span>Total</span>
+							<span>
+								<% if(id){ %>
+									₹ <%= cartProducts.totalPrice %>
+										<% } %>
+							</span>
+						</p>
+
+					</div>
+					<div class="size-209 p-t-1">
+						<span class="mtext-110 cl2">
+
+						</span>
+					</div>
+					<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
+							Checkout</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="ftco-footer bg-light ftco-section">
+		<div class="container">
+			<div class="row">
+				<div class="mouse">
+					<a href="#" class="mouse-icon">
+						<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+					</a>
+				</div>
+			</div>
+			<div class="row mb-5">
+				<div class="col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Winkel</h2>
+						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+							<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+							<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="ftco-footer-widget mb-4 ml-md-5">
+						<h2 class="ftco-heading-2">Menu</h2>
+						<ul class="list-unstyled">
+							<li><a href="#" class="py-2 d-block">Shop</a></li>
+							<li><a href="#" class="py-2 d-block">About</a></li>
+							<li><a href="#" class="py-2 d-block">Journal</a></li>
+							<li><a href="#" class="py-2 d-block">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Help</h2>
+						<div class="d-flex">
+							<ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+								<li><a href="#" class="py-2 d-block">Shipping Information</a></li>
+								<li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
+								<li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
+								<li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
+							</ul>
+							<ul class="list-unstyled">
+								<li><a href="#" class="py-2 d-block">FAQs</a></li>
+								<li><a href="#" class="py-2 d-block">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="ftco-footer-widget mb-4">
+						<h2 class="ftco-heading-2">Have a Questions?</h2>
+						<div class="block-23 mb-3">
+							<ul>
+								<li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain
+										View, San Francisco, California, USA</span></li>
+								<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
+											210</span></a></li>
+								<li><a href="#"><span class="icon icon-envelope"></span><span
+											class="text">info@yourdomain.com</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+
+					<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;
+						<script>document.write(new Date().getFullYear());</script> All rights reserved | This template
+						is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
+							href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+
+
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+				stroke="#F96D00" />
+		</svg></div>
+
+
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script src="/assets/js/jquery.easing.1.3.js"></script>
+	<script src="/assets/js/jquery.waypoints.min.js"></script>
+	<script src="/assets/js/jquery.stellar.min.js"></script>
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="/assets/js/aos.js"></script>
+	<script src="/assets/js/jquery.animateNumber.min.js"></script>
+	<script src="/assets/js/bootstrap-datepicker.js"></script>
+	<script src="/assets/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="/assets/js/google-map.js"></script>
+	<script src="/assets/js/main.js"></script>
+
+	<script>
+		$(document).ready(function () {
+
+			var quantitiy = 0;
+			$('.quantity-right-plus').click(function (e) {
+
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				$('#quantity').val(quantity + 1);
+
+
+				// Increment
+
+			});
+
+			$('.quantity-left-minus').click(function (e) {
+				// Stop acting like a button
+				e.preventDefault();
+				// Get the field name
+				var quantity = parseInt($('#quantity').val());
+
+				// If is not undefined
+
+				// Increment
+				if (quantity > 0) {
+					$('#quantity').val(quantity - 1);
+				}
+			});
+
+		});
+	</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+const loadCheckout = async (req, res) => {
+    try {
+        userSession = req.session
+        if (userSession.userId) {
+            const id = req.query.addressid
+            console.log(id)
+            const userData = await User.findById({ _id: userSession.userId })
+            const completeUser = await userData.populate('cart.item.productId')
+            const addressData = await Address.find({ userId: userSession.userId });
+            const selectAddress = await Address.findOne({ _id: id });
+            console.log(selectAddress)
+            //  const offer = await Offer.findOne({_id:userSession.userId})
+            //  console.log(offer)
+
+            if (userSession.couponTotal == 0) {
+                //update coupon
+                userSession.couponTotal = userData.cart.totalPrice;
+            }
+
+            res.render('checkout', { isLoggedIn, id: userSession.userId, cartProducts: completeUser.cart, addSelect: selectAddress, userAddress: addressData, })
+
+
+
+        } else {
+            res.render('checkout', { isLoggedIn, id: userSession.userId, })
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+..............Checkout..................................
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Winkel - Free Bootstrap 4 Template by Colorlib</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+	<link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/animate.css">
+
+	<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+	<link rel="stylesheet" href="/assets/css/aos.css">
+
+	<link rel="stylesheet" href="/assets/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+
+
+	<link rel="stylesheet" href="/assets/css/flaticon.css">
+	<link rel="stylesheet" href="/assets/css/icomoon.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body class="goto-here">
+
+	<%- include('../layouts/header.ejs') %>
+
+		<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+			<div class="container">
+				<div class="row no-gutters slider-text align-items-center justify-content-center">
+					<div class="col-md-9 ftco-animate text-center">
+						<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span>
+							<span>Checkout</span>
+						</p>
+						<h1 class="mb-0 bread">Checkout</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-xl-8 ftco-animate">
+						<form action="/checkout" method="post" class="billing-form">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+							<div class="row align-items-end">
+								<%if(addSelect!=null){%>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="firstname">Firt Name</label>
+											<input type="text" class="form-control" name="firstname"
+												value="<%= addSelect.firstname %>" required>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="lastname">Last Name</label>
+											<input type="text" class="form-control" name="lastname"
+												value="<%= addSelect.lastname %>" required>
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="country">State / Country</label>
+											<input type="text" class="form-control" name="country"
+												value="<%= addSelect.country %>" required>
+
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="streetaddress">Street Address</label>
+											<input type="text" class="form-control" name="address"
+												value="<%= addSelect.address %>" required>
+										</div>
+									</div>
+									<!-- <div class="col-md-6">
+		            	<div class="form-group">
+	                  <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+	                </div> -->
+							</div>
+							<div class="w-100"></div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="city">Town / City</label>
+									<input type="text" class="form-control" name="city" value="<%= addSelect.city %>"
+										required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="zip">Postcode / ZIP *</label>
+									<input type="text" class="form-control" name="zip" value="<%= addSelect.zip %>"
+										required> >
+								</div>
+							</div>
+							<div class="w-100"></div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="phone">Phone</label>
+									<input type="text" class="form-control" name="phone" value="<%= addSelect.phone %>"
+										required>>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="email">State</label>
+									<input type="text" name="state" class="form-control" required>
+								</div>
+							</div>
+							<% }else{%>
+								<div class="row align-items-end">
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="firstname">First Name</label>
+											<input type="text" class="form-control" required>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="lastname">Last Name</label>
+											<input type="text" class="form-control" required>
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="country">State / Country</label>
+											<input type="text" class="form-control" required>
+
+										</div>
+									</div>
+									<div class="w-100"></div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="streetaddress">Street Address</label>
+											<input type="text" class="form-control" required>
+										</div>
+									</div>
+									
+								</div>
+								<div class="w-100"></div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="city">Town / City</label>
+										<input type="text" class="form-control" required>>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="zip">Postcode / ZIP *</label>
+										<input type="text" class="form-control" required> >
+									</div>
+								</div>
+								<div class="w-100"></div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="phone">Phone</label>
+										<input type="text" class="form-control" required>>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="email">Email Address</label>
+										<input type="text" class="form-control" required>
+
+									</div>
+									<% }%>
+								</div>
+
+								<div class="w-100"></div>
+								<div class="col-md-12">
+									<div class="form-group mt-4">
+										<div class="radio">
+											<label class="mr-3"><input type="radio" name="optradio"> Create an Account?
+											</label>
+											<label><input type="radio" name="optradio"> Ship to different
+												address</label>
+										</div>
+									</div>
+								</div>
+					</div>
+					
+
+
+
+					<div class="tab-pane" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+						<a href="#" class=""> Add Address <i class="icon-edit"></i></a>
+
+						<p>You can select the following Shipping Address.</p>
+
+
+						<div class="row">
+							<%if(userAddress.length>0){
+								for(let key of userAddress){%>
+								<a href="/checkout?addressid=<%=key._id%>">
+									<div class="col-lg-4">
+										<a href="/checkout?addressid=<%=key._id%>">
+											<div class="card card-dashboard">
+
+												<a href="/checkout?addressid=<%=key._id%>">
+													<div class="card-body">
+														
+													
+                                          <div class="radio border p-3 pb-1" style="border-radius: 8px;">
+                                    <label><input type="radio" name="currentAddress" value="currentAddress"> Ship to current address</label>
+                                    
+
+														<p>
+															<%= key.firstname %>
+																<%=key.lastname%><br>
+																	<%= key.address %> , <%= key.address2 %>
+																			<br>
+																			<%= key.city %>
+																				, <%= key.state %><br>
+																					<%= key.country %>
+																						<br>
+																						<%= key.zip %>
+																							<br>
+																							<%= key.phone %>
+																								<br>
+																								<br>
+																								<!-- <a href="#">Edit <i class="icon-edit"></i></a> -->
+																								<a
+																									href="/deleteaddress?id=<%= key._id %>"><i
+																										class="icon-close"></i>
+																									delete</a>
+														</p>
+													</div>
+												</a>
+												<!-- End .card-body -->
+											</div>
+										</a>
+										<!-- End .card-dashboard -->
+									</div>
+								</a>
+								<!-- End .col-lg-6 -->
+								<%}}else{%>
+
+									<div class="col-lg-6">
+										<a href="">
+											<div class="card card-dashboard">
+												<div class="card-body">
+													<h3 class="card-title">Shipping Address
+													</h3>
+
+													<p>You have not set up this type of
+														address yet.<br>
+												</div>
+											</div>
+										</a>
+									</div>
+									<%}%>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+				<div class="row mt-5 pt-3 ml-5 d-flex">
+					<div class="col-md-4  d-flex">
+
+						<div class="cart-detail cart-total bg-light p-3 p-md-4">
+							<h3 class="billing-heading mb-4">Cart Total</h3>
+							<p class="d-flex">
+								<% for(let key of cartProducts.item){ %>
+
+
+								<p class="d-flex">
+									<span>
+										<%=key.productId.name%>
+									</span>
+									<span>
+										 - <%= key.qty %>
+									</span>
+								</p>
+								<% }%>
+
+								<p class="d-flex">
+									<span>Delivery</span>
+									<span>₹50.00</span>
+								</p>
+								<p class="d-flex">
+									<span>SubTotal</span>
+									<span>
+										<% if(id){ %>
+											₹ <%= cartProducts.totalPrice %>
+												<% } %>
+									</span>
+								</p>
+								<p class="d-flex">
+									<span>Discount</span>
+									<span>$3.00</span>
+								</p>
+								<hr>
+								<p class="d-flex total-price">
+
+									<span>Total</span>
+									<span>
+										<% if(id){ %>
+											₹ <%= cartProducts.totalPrice %>
+												<% } %>
+									</span>
+
+								</p>
+
+								
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="cart-detail bg-light p-3 p-md-4">
+							<h3 class="billing-heading mb-4">Payment Method</h3>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+										<label><input type="radio" name="payment" value="Cash-on-Dilevery" class="mr-2">
+											Cash on
+											Delivery</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+										<label><input type="radio" name="payment" value="RazorPay" class="mr-2">
+											Razorpay</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+										<label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="checkbox">
+										<label><input type="checkbox" value="" class="mr-2"> I have read and accept the
+											terms and conditions</label>
+									</div>
+								</div>
+							</div>
+							<button type="submit" class="btn-danger" style="margin: 3rem;">Place Order</button>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div> <!-- .col-md-8 -->
+			</div>
+			</form>
+			</div>
+		</section> <!-- .section -->
+
+		<footer class="ftco-footer bg-light ftco-section">
+			<div class="container">
+				<div class="row">
+					<div class="mouse">
+						<a href="#" class="mouse-icon">
+							<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+						</a>
+					</div>
+				</div>
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Winkel</h2>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.
+							</p>
+							<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+								<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+								<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+								<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4 ml-md-5">
+							<h2 class="ftco-heading-2">Menu</h2>
+							<ul class="list-unstyled">
+								<li><a href="#" class="py-2 d-block">Shop</a></li>
+								<li><a href="#" class="py-2 d-block">About</a></li>
+								<li><a href="#" class="py-2 d-block">Journal</a></li>
+								<li><a href="#" class="py-2 d-block">Contact Us</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Help</h2>
+							<div class="d-flex">
+								<ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+									<li><a href="#" class="py-2 d-block">Shipping Information</a></li>
+									<li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
+									<li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
+									<li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
+								</ul>
+								<ul class="list-unstyled">
+									<li><a href="#" class="py-2 d-block">FAQs</a></li>
+									<li><a href="#" class="py-2 d-block">Contact</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Have a Questions?</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="icon icon-map-marker"></span><span class="text">203 Fake St.
+											Mountain View, San Francisco, California, USA</span></li>
+									<li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929
+												210</span></a></li>
+									<li><a href="#"><span class="icon icon-envelope"></span><span
+												class="text">info@yourdomain.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+
+						<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+							template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</footer>
+
+
+
+		<!-- loader -->
+		<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+				<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+				<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+					stroke="#F96D00" />
+			</svg></div>
+
+
+		<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.easing.1.3.js"></script>
+		<script src="/assets/js/jquery.waypoints.min.js"></script>
+		<script src="/assets/js/jquery.stellar.min.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/aos.js"></script>
+		<script src="/assets/js/jquery.animateNumber.min.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/js/scrollax.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+		<script src="/assets/js/google-map.js"></script>
+		<script src="/assets/js/main.js"></script>
+		<script>
+
+			let rdbtns = document.querySelectorAll("input[name='optradio']")
+			let output = document.querySelector("#payment")
+			function selected() {
+				let selected = document.querySelector("input[name='optradio']:checked").value
+				output.value = selected
+			}
+			rdbtns.forEach(x => {
+				x.addEventListener('change', selected)
+			})
+
+		</script>
+
+</body>
+
+</html>
+
+
+<div class="container mt-5">
+    <div class="">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading text-center mt-5">
+                    <h1>'</h1>
+                    <h3>Coupon Management</h3>
+                </div>
+                <div class="panel-body p-4">
+                    <% if(typeof message!="undefined"){ %>
+                        <p class="text-success"><%= message %></p>
+                        <%}%>
+                    <form action="" method="post" class="">
+                        <input type="text" name="name" placeholder="Coupon Name" class=""/>
+                        <input type="text" name="type" placeholder="Coupon Amount" class="mf-2"/>
+                        <input type="text" name="discount" placeholder="Coupon Code" class="mf-2"/>
+                        <!-- <input type="date" name="expirydate" class="mf-2"/>
+                        <input type="text" name="minimumbill" placeholder="Minimum Bill" class="mf-2"/> -->
+                        <button type="submit" class="btn btn-info mt-3 ">Add</button>
+                        <hr />
+                    </form>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Discount</th>
+                                
+                                <!-- <th scope="col">Minimum Bill</th> -->
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            if(couponData.length>0){
+                                for(let i=0;i<couponData.length;i++){
+                                    %>
+                                    <tr>
+                                        <td><%= couponData[i].name%></td>
+                                        <td><%= couponData[i].type%></td>
+                                        <td><%= couponData[i].discount%></td>
+                                        
+                                       
+                                        <% if(couponData[i].isActive){ %>
+                                            <td><a class="btn btn-danger" onclick="return confirm('Are You Sure...!');" href="/admin/deactivateCoupen?id=<%= couponData[i]._id%>">Deactivate</a></td>
+                                        <% }else{%>
+                                            <td><p class="text-danger">Expired Coupen</p></td>
+                                        <%} %> 
+                                    
+                                    </tr>
+                                <% } %> 
+                            <% } else { %>
+                                <p>No Coupon Found</p>
+                            <% } %> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="ftco-section bg-light">
+							// 	<div class="container">
+							// 		<div class="row justify-content-center mb-3 pb-3">
+							// 			<div class="col-md-12 heading-section text-center ftco-animate">
+							// 				<h2 class="mb-4">Products</h2>
+							// 				<p>
+							// 				</p>
+							// 			</div>
+							// 		</div>
+							// 	</div>
+							// 	<div class="container">
+							// 		<div class="row">
+							// 			<div class="col-sm col-md-6 col-lg ftco-animate">
+							// 				<div class="product">
+							// 					<a href="#" class="img-prod"><img class="img-fluid"
+							// 							src="/assets/upload/HP71.webp" alt="Colorlib Template">
+							// 						<span class="status">30%</span>
+							// 						<div class="overlay"></div>
+							// 					</a>
+							// 					<div class="text py-3 px-3">
+							// 						<h3><a href="#">Floral Jackquard Pullover</a></h3>
+							// 						<a href=""><span class="icon-favorite"></span></a>
+							// 						<div class="d-flex">
+							// 							<div class="pricing">
+							// 								<p class="price"><span
+							// 										class="mr-2 price-dc">$120.00</span><span
+							// 										class="price-sale">$80.00</span></p>
+							// 							</div>
+							// 							<div class="rating">
+							// 								<p class="text-right">
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 								</p>
+							// 							</div>
+							// 						</div>
+							// 						<p class="bottom-area d-flex px-3">
+							// 							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add
+							// 									to cart <i class="ion-ios-add ml-1"></i></span></a>
+							// 							<a href="#" class="buy-now text-center py-2">Buy now<span><i
+							// 										class="ion-ios-cart ml-1"></i></span></a>
+							// 						</p>
+							// 					</div>
+							// 				</div>
+							// 			</div>
+							// 			<div class="col-sm col-md-6 col-lg ftco-animate">
+							// 				<div class="product">
+							// 					<a href="#" class="img-prod"><img class="img-fluid"
+							// 							src="assets/upload/HP101.webp" alt="Colorlib Template">
+							// 						<div class="overlay"></div>
+							// 					</a>
+							// 					<div class="text py-3 px-3">
+							// 						<h3><a href="#">Floral Jackquard Pullover</a></h3>
+							// 						<a href="/wishlist"><span class="icon-favorite"></span></a>
+							// 						<div class="d-flex">
+							// 							<div class="pricing">
+							// 								<p class="price"><span>₹9000</span></p>
+							// 							</div>
+							// 							<div class="rating">
+							// 								<p class="text-right">
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 								</p>
+							// 							</div>
+							// 						</div>
+							// 						<p class="bottom-area d-flex px-3">
+							// 							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add
+							// 									to cart <i class="ion-ios-add ml-1"></i></span></a>
+							// 							<a href="#" class="buy-now text-center py-2">Buy now<span><i
+							// 										class="ion-ios-cart ml-1"></i></span></a>
+							// 						</p>
+							// 					</div>
+							// 				</div>
+							// 			</div>
+							// 			<div class="col-sm col-md-6 col-lg ftco-animate">
+							// 				<div class="product">
+							// 					<a href="#" class="img-prod"><img class="img-fluid"
+							// 							src="/assets/upload/HP81.webp" alt="Colorlib Template">
+							// 						<div class="overlay"></div>
+							// 					</a>
+							// 					<div class="text py-3 px-3">
+							// 						<h3><a href="#">Floral Jackquard Pullover</a></h3>
+							// 						<a href=""><span class="icon-favorite"></span></a>
+							// 						<div class="d-flex">
+							// 							<div class="pricing">
+							// 								<p class="price"><span>₹7000</span></p>
+							// 							</div>
+							// 							<div class="rating">
+							// 								<p class="text-right">
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 								</p>
+							// 							</div>
+							// 						</div>
+							// 						<p class="bottom-area d-flex px-3">
+							// 							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add
+							// 									to cart <i class="ion-ios-add ml-1"></i></span></a>
+							// 							<a href="#" class="buy-now text-center py-2">Buy now<span><i
+							// 										class="ion-ios-cart ml-1"></i></span></a>
+							// 						</p>
+							// 					</div>
+							// 				</div>
+							// 			</div>
+							// 			<div class="col-sm col-md-6 col-lg ftco-animate">
+							// 				<div class="product">
+							// 					<a href="#" class="img-prod"><img class="img-fluid"
+							// 							src="/assets/upload/HP91.webp" alt="Colorlib Template">
+							// 						<div class="overlay"></div>
+							// 					</a>
+							// 					<div class="text py-3 px-3">
+							// 						<h3><a href="#">Floral Jackquard Pullover</a></h3>
+							// 						<a href=""><span class="icon-favorite"></span></a>
+							// 						<div class="d-flex">
+							// 							<div class="pricing">
+							// 								<p class="price"><span>₹6000</span></p>
+							// 							</div>
+							// 							<div class="rating">
+							// 								<p class="text-right">
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 									<a href="#"><span
+							// 											class="ion-ios-star-outline"></span></a>
+							// 								</p>
+							// 							</div>
+							// 						</div>
+							// 						<p class="bottom-area d-flex px-3">
+							// 							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add
+							// 									to cart <i class="ion-ios-add ml-1"></i></span></a>
+							// 							<a href="#" class="buy-now text-center py-2">Buy now<span><i
+							// 										class="ion-ios-cart ml-1"></i></span></a>
+							// 						</p>
+							// 					</div>
+							// 				</div>
+							// 			</div>
+							// 		</div>
+							// 	</div>
+							// </section>
+
+
+
+dashbpard
+
+<!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+    <title>Winkel - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  
+    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+  
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  
+    <link rel="stylesheet" href="/assets/css/aos.css">
+  
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+  
+    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+  
+  
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  </head>
+
+    
+    <%- include('../layouts/header.ejs') %>
+
+
+<script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.easing.1.3.js"></script>
+		<script src="/assets/js/jquery.waypoints.min.js"></script>
+		<script src="/assets/js/jquery.stellar.min.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/aos.js"></script>
+		<script src="/assets/js/jquery.animateNumber.min.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/js/scrollax.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+		<script src="/assets/js/google-map.js"></script>
+		<script src="/assets/js/main.js"></script> 
+
+
+
+        
+        
+        <main class="main">
+            <div class="" style="background-image: url('assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">My Account<span></span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+            
+        
+            <div class="page-content">
+                <div class="dashboard">
+                    <div class="container">
+                        <div class="row">
+                            <aside class="col-md-4 col-lg-3">
+                                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="" role="tab" aria-controls="tab-dashboard" aria-selected="true">My Profile</a>
+                                    </li> -->
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab" href="#tab-dashboard" role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</a>
+                                    </li> -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">My Orders</a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Downloads</a>
+                                    </li> -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Edit User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/logout">Sign Out</a>
+                                    </li>
+                                </ul>
+                            </aside><!-- End .col-lg-3 -->
+        
+                            <div class="col-md-8 col-lg-9">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                        <p><h1>Werlcome..</h1><span class="font-weight-normal text-dark"><h3><%= user.name %></h3></span>
+                                        
+                                    </div>
+        
+                                    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+                                        <% if(userOrders){%>
+                                            <div role="tabpanel" class="tab-pane" id="tabs-1-2">
+                                                <div class="nk-gap"></div>
+                                                
+                                                <section class="container-fluid">
+                                                  <table id="myTable" class="table text-success	">
+                                                      <thead>
+                                                        <tr>
+                                                          <th scope="col">OrderId</th>
+                                                          <th scope="col">Time</th>
+                                                          <th scope="col">Payment</th>
+                                                          <th scope="col">Status</th>
+                                                          <th scope="col">Actions</th>
+                                                                
+                                                        </tr>
+                                                      </thead>
+                                                      <% for(let key of userOrders){ %>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td><%= key._id %></td>
+                                                          <td><%= key.createdAt.toDateString() %></td>
+                                                          <td><%= key.payment %></td>
+                                                          <td><%= key.status %></td>
+                                                          <td><a href="/cancelOrder?id=<%= key._id %>" class="btn btn-outline-primary-2">Cancel Order</a><br>
+                                                          <a href="/viewOrder?id=<%= key._id %>" class="btn btn-primary ms-2 ">View Details</a></td>
+                                                        </tr>
+                                                      </tbody>
+                                                      <% } %>
+                                                    </table>
+                                              </section>
+                      
+                      
+                                                <div class="nk-gap"></div>
+                                            </div>
+                                            <%}else{%>
+        
+                                                <p>No order has been made yet.</p>
+                                                <a href="/shop" class="btn btn-outline-primary-2"><span>GO SHOP</span><i class="icon-long-arrow-right"></i></a>
+                                                <%}%>
+                                        
+                                    </div>
+        
+                                    <div class="tab-pane fade" id="tab-downloads" role="tabpanel" aria-labelledby="tab-downloads-link">
+                                        <form action="/addAddress" method="post" >
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <h2 class="checkout-title">New Address</h2><!-- End .checkout-title -->
+                                                        
+                                                    
+                                                        <label>Name *</label>
+                                                         <input type="text" class="form-control" name="firstname" required>
+                                                            
+                                                         <label>Last Name *</label>
+                                                         <input type="text" class="form-control" name="lastname" required>
+        
+                                                        <label>Country *</label>
+                                                        <input type="text" class="form-control" name="country" required>
+                        
+                                                        <label>Street address *</label>
+                                                        <input type="text" class="form-control" placeholder="House number and Street name" name="streetAddress" required>
+                                                        
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label>Town / City *</label>
+                                                                <input type="text" class="form-control" name="city" required>
+                                                            </div><!-- End .col-sm-6 -->
+                        
+                                                            <div class="col-sm-6">
+                                                                <label>State / County *</label>
+                                                                <input type="text" class="form-control" name="state" required>
+                                                            </div><!-- End .col-sm-6 -->
+                                                        </div><!-- End .row -->
+                        
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <label>Postcode / ZIP *</label>
+                                                                <input type="text" class="form-control" name="zip" required>
+                                                            </div><!-- End .col-sm-6 -->
+                        
+                                                            <div class="col-sm-6">
+                                                                <label>Phone *</label>
+                                                                <input type="tel" class="form-control" name="mno" required>
+                                                            </div><!-- End .col-sm-6 -->
+                                                        </div><!-- End .row -->
+                        
+                                                        <button type="submit" class="btn btn-outline-primary-2">
+                                                            <span>Update</span>
+                                                            <i class="icon-long-arrow-right"></i>
+                                                        </button>
+                                                            <a href="/dashboard" class="btn btn-outline-primary-2"><span>GO BACK</span><i class="icon-long-arrow-right"></i></a>
+                                                </div><!-- End .col-lg-9 -->
+                                            </div><!-- End .row -->
+                                        </form>
+                                    </div><!-- .End .tab-pane -->
+        
+                                    <div class="tab-pane fade" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                                        <div>
+                                            <a class="nav-link btn  btn-outline-primary-2" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Add Address<i class="icon-edit"></i></a>
+        
+                                        </div>
+                                        <p>The following addresses will be used on the checkout page by default.</p>
+        
+                                        <div class="row">
+                                            <%if(userAddress.length>0){
+                                                for(let key of userAddress){%>
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+        
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+        
+                                                        <p><%= key.firstname %> <%=key.lastname%><br>
+                                                            <%= key.address %> <br>
+                                                            <%= key.city %> , <%= key.state %><br>
+                                                            <%= key.country %><br>
+                                                            <%= key.zip %><br>
+                                                            <%= key.phone %><br>
+                                                           
+                                                        <!-- <a href="#">Edit <i class="icon-edit"></i></a> -->
+                                                        <a href="/deleteAddress?id=<%= key._id %>"><i class="icon-close"></i> delete</a>
+                                                    </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+                                            <%}}else{%>
+        
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Shipping Address</h3><!-- End .card-title -->
+        
+                                                        <p>You have not set up this type of address yet.<br>
+                                                        <a href="#">Edit <i class="icon-edit"></i></a></p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+                                            <%}%>
+                                        </div><!-- End .row -->
+                                    </div><!-- .End .tab-pane -->
+        
+                                    <div class="tab-pane fade" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                                        <form action="/editUser" method="post">
+                                            <label>Name *</label>
+                                            <input type="text" class="form-control" name="name" value="<%=user.name%>">
+                                            
+                                            <label>Email address *</label>
+                                            <input type="email" class="form-control" name="email" value="<%=user.email%>">
+        
+                                            <label>Mobile Number *</label>
+                                            <input type="text" class="form-control" name="mobile" value="<%=user.mobile%>">
+        
+                                            <label>Current password (leave blank to leave unchanged)</label>
+                                            <input type="password" class="form-control" name="password1">
+        
+                                            <label>New password (leave blank to leave unchanged)</label>
+                                            <input type="password" id="passwords" class="form-control" name="password2">
+        
+                                            <label>Confirm new password</label>
+                                            <input type="password" id="conpasswords" class="form-control mb-2" name="password3">
+        
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>SAVE CHANGES</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+                                        </form>
+                                    </div><!-- .End .tab-pane -->
+                                </div>
+                            </div><!-- End .col-lg-9 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+        
+         <script type="text/javascript">
+             function validation() {
+            
+              var password2 = document.getElementById('password2').value;
+              var password3 = document.getElementById('password3').value;
+        
+        
+        
+        
+            
+        
+              if (password == "") {
+                document.getElementById('passwords').innerHTML =
+                  "please fill the password field";
+                return false;
+              }
+              if ((password.length < 5) || (password.length > 10)) {
+                document.getElementById('passwords').innerHTML =
+                  "Password length must be between 5 and 10";
+                return false;
+              }
+        
+              if (password2 == "") {
+                document.getElementById('conpasswords').innerHTML =
+                  "please fill the confirm password field";
+                return false;
+              }
+              if (password2 != password) {
+                document.getElementById('conpasswords').innerHTML =
+                  "Password are not matching";
+                return false;
+              }
+            }
+          </script>
+
+          <script src="/assets/js/jquery.min.js"></script>
+		<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/jquery.easing.1.3.js"></script>
+		<script src="/assets/js/jquery.waypoints.min.js"></script>
+		<script src="/assets/js/jquery.stellar.min.js"></script>
+		<script src="/assets/js/owl.carousel.min.js"></script>
+		<script src="/assets/js/jquery.magnific-popup.min.js"></script>
+		<script src="/assets/js/aos.js"></script>
+		<script src="/assets/js/jquery.animateNumber.min.js"></script>
+		<script src="/assets/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/js/scrollax.min.js"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+		<script src="/assets/js/google-map.js"></script>
+		<script src="/assets/js/main.js"></script> 
+
+
+
+        
+        

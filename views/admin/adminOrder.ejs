@@ -1,0 +1,93 @@
+<%-include('../layouts/adminheader')%>
+
+  <div class="container mt-5 pt-5">
+    <div class="container-fluid mb-3 pb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+           
+            <div class="card-body" style="display: flex; flex-direction: row;">
+                <h4 class="card-title">Orders List</h4>
+
+                <div class="col-md-5" style="justify-content: right;">
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <a href="/admin/orderDownload"><button type="button" 
+                          class="btn btn-warning btn-lg">Export orders</button></a>
+                          
+                  </div>
+              </div>
+                
+            </div>
+            
+            <div class="content table-responsive table-full-width">
+              <table class="table table-striped">
+                <thead>
+                  <th class="border-top-0">SI No</th>
+                  <!-- <th class="border-top-0">USER</th> -->
+                  <!-- <th class="border-top-0">E-mail</th> -->
+                  <th class="border-top-0">Order ID</th>
+                  <th class="border-top-0">Time</th>
+                  <th class="border-top-0">Payment</th>
+                  <th class="border-top-0">Price</th>
+
+
+
+                
+                  <th class="border-top-0">ACTION</th>
+                </thead>
+                <tbody>
+                    <tbody>
+                        <% if(order.length>0){ %>
+                            <% for(let i=1;i <=order.length; i++){ %>  
+                        <tr>
+                            <th><%= i %> </th>
+                            <td>
+                                <%= order[i-1]._id %>
+                            </td> 
+                            
+                            <td>
+                                <%= order[i-1].createdAt %>
+                            </td>
+                            <td>
+                                <%= order[i-1].payment %>
+                            </td>   
+                            <td>
+                                <%= order[i-1].products.totalPrice %>
+                            </td>
+                            <!-- <td>
+                                <%= order[i-1].status %>
+                            </td>    -->
+                            <td>
+                            <form action="" method="post">
+                              <select name="status" >
+                                  <option ><%= order[i-1].status %> </option>
+                                  <option >In Progress</option>
+                                  <option >Packed</option>
+                                  <option >Shipped</option>
+                                  <option >Delivered</option>
+                                  <option >Canceled</option>
+                              </select>
+                              <input type="hidden" name="orderid" value="<%= order[i-1]._id %>">
+                              <button type="submit" class="border border-primary rounded">Update</button>
+                          </form>
+                          </td>
+                            
+                        </tr>
+                        <% } } else{ %>
+                            <tr>
+                                <td colspan="5">Orders Not Found</td>
+                            </tr>
+                            <% } %>
+                        
+                    </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
