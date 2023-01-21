@@ -50,6 +50,7 @@ admin_route.post("/adminOrder",adminController.updateOrderStatus)
 
 
 
+
 admin_route.get('/loadBanners',adminController.getBanners)
 admin_route.post('/loadBanners',multer.upload.array('bannerImage',2),adminController.addBanner)
 admin_route.get('/currentBanner',adminController.currentBanner)

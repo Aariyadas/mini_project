@@ -425,21 +425,51 @@ const editCategory = async (req, res) => {
   
 
 
-const viewOrder = async (req, res) => {
-    try {
-        const orderData = await Order.find().sort({createdAt:-1})
+// const viewOrder = async (req, res) => {
+//     try {
+//         const orderData = await Order.find().sort({createdAt:-1})
 
-        if (orderType == undefined) {
-            res.render('adminOrder', { order: orderData })
-        } else {
-            id = req.query.id
-            res.render('adminOrder', { id: id, order: orderData })
-        }
-    } catch (error) {
-        console.log(error)
+//         if (orderType == undefined) {
+//             res.render('adminOrder', { order: orderData })
+//         } else {
+//             id = req.query.id
+//             res.render('adminOrder', { id: id, order: orderData })
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// };
+
+const viewOrder = async(req,res)=>{
+  try {
+    const productData = await Product.find()
+    const userData = await User.find({is_admin: 0})
+    const orderData = await Order.find().sort({createdAt :-1})
+    console.log(orderData)
+    for(let key of orderData){
+      await key.populate('products.item.productId');
+      await key.populate('userId');
     }
-};
-
+    if (orderType == undefined) {
+      res.render('adminOrder', {
+        users: userData,
+        product: productData,
+        order: orderData,
+        
+      });
+    }else{
+        id = req.query.id;
+        res.render('adminOrder', {
+          users: userData,
+          product: productData,
+          order: orderData,
+          id: id,
+        });
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
+}
 const updateOrderStatus = async (req, res) => {
     try {
         // const status=req.body.status
@@ -452,6 +482,20 @@ const updateOrderStatus = async (req, res) => {
     }
 }
 
+// const adminOrderDetails = async(req,res)=>{
+//   try {
+//       const id = req.query.id
+//       const orderData = await Orders.findById({_id:id});
+//       await orderData.populate('products.item.productId');
+//       await orderData.populate('userId')
+//  res.render('adminOrder',{
+//   order:orderData,
+
+//  })
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
 
 const getBanners = async (req, res) => {
@@ -664,6 +708,7 @@ module.exports = {
     updateCategory,
     showProduct,
     viewOrder,
+    
     orderDownload,
     getBanners,
     addBanner,
