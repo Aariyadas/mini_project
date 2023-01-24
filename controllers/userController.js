@@ -492,8 +492,12 @@ const userDashboard = async (req, res) => {
   try {
 
     userSession = req.session
-  
-    const orderData = await Orders.find({ userId: userSession.userId }).sort({createdAt:-1});
+    console.log(userSession);
+    const id=req.session.userId
+    // .sort({createdAt:-1})
+    const orderData = await Orders.find({ userId:id});
+    console.log('alan');
+   console.log(orderData)
     const userData = await User.findById({ _id: userSession.userId });
     const addressData = await Address.find({ userId: userSession.userId });
     const category = await Category.find()
@@ -524,8 +528,7 @@ const viewOrder = async (req, res) => {
     if (userSession.userId) {
       const id = req.query.id;
       userSession.currentOrder = id;
-      const orderData = await Orders.findById({ _id: id })
-      console.log(orderData)
+      const orderData = await Orders.findById({ _id: id });
       const userData = await User.find({ id: userSession.userId });
       await orderData.populate("products.item.productId");
       res.render("viewOrder", {
@@ -726,7 +729,7 @@ const storeOrder = async (req, res) => {
           discount: userSession.offer.discount,
           amount:completeUser.cart.totalPrice
         });
-        console.log();
+       
         const orderProductStatus = [];
         for (const key of order.products.item) {
           orderProductStatus.push(0);
@@ -806,7 +809,9 @@ const razorpayCheckout = async (req, res) => {
 
 const loadSuccess = async (req, res) => {
   try {
+
     userSession = req.session;
+    console.log(userSession);
     if (userSession.userId) {
       const userData = await User.findById({ _id: userSession.userId });
       const productData = await productModel.find();
@@ -819,11 +824,12 @@ const loadSuccess = async (req, res) => {
           }
         }
       }
-      await Orders.updateOne({
-        userId: userSession.userId,
-      });
+      // await Orders.updateOne({
+      //   userId: userSession.userId,
+      // });
+      // userId: userSession.userId,
       await Orders.updateOne(
-        { userId: userSession.userId, _id: userSession.currentOrder },
+        {  _id: userSession.currentOrder },
         { $set: { status: "Build" } }
       );
       await User.updateOne(

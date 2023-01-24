@@ -33,21 +33,22 @@ admin_route.get('/editProduct/' ,adminController.editProduct)
 admin_route.get('/addProduct',adminMiddleware.isLogin, adminController.addProductLoad)
 
 admin_route.post('/addProduct', multer.upload.array("uploaded_file"), adminController.updateAddProduct)
-admin_route.post('/editProduct/:id',  adminController.updateEditProduct)
+admin_route.post('/editProduct/:id',multer.upload.array("uploaded_file"),adminController.updateEditProduct)
 
 admin_route.get('/blockProduct', adminController.blockProduct)
 admin_route.get('/showProduct',adminMiddleware.isLogin, adminController.showProduct)
 
 admin_route.get('/adminCategory',adminMiddleware.isLogin, adminController.viewCategory)
 admin_route.post('/adminCategory', adminController.addCategory)
-admin_route.get('/deleteCategory', adminController.deleteCategory) 
+// admin_route.get('/deleteCategory', adminController.deleteCategory) 
 admin_route.get('/edit-category', adminController.editCategory)
 admin_route.post('/edit-category/:id', adminController.updateCategory)
+admin_route.get('/block-category', adminController.blockCategory)
+admin_route.get('/show-category', adminController.showCategory)
 
 
 admin_route.get('/adminOrder',adminMiddleware.isLogin,adminController.viewOrder)
 admin_route.post("/adminOrder",adminController.updateOrderStatus)
-
 
 
 

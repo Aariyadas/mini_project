@@ -1,59 +1,13 @@
 <%- include("../layouts/adminHeader.ejs") %>
 
-<!-- <div class="page-breadcrumb">
-    <div class="row align-items-center">
-        <div class="col-5">
-            <h4 class="page-title">Category Management</h4>
-            
-        </div>
-        <div class="col-7">
-        </div>
-        <div class="nk-accordion mt-4" id="accordion-1" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default btn btn-danger text-white">
-                <div class="panel-heading text-center" role="tab" id="accordion-1-1-heading">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion-1"
-                        href="#accordion-1-1" aria-expanded="true" aria-controls="accordion-1-1">
-                        Add Category <span class="panel-heading-arrow fa fa-angle-down text-white"></span>
-                    </a>
-                </div> -->
-                <!-- <div id="accordion-1-1" class="panel-collapse collapse" role="tabpanel" -->
-                    <!-- aria-labelledby="accordion-1-1-heading"> -->
-                    <form action="/admin/adminCategory" method="post">
-                        <div class="row d-flex justify-content-center align-items-center h-100">
-                            <div class="d-flex flex-row align-items-center mb-4">
-                               
-                                <div class="form-outline flex-fill mb-0">
-                                    <label class="form-label" for="form3Example3c">Enter New
-                                        Category</label>
-                                    <input type="text" id="form3Example3c" class="form-control"
-                                        name="category" required />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                    <button type="submit" value="Register"
-                                        class="btn btn-warning btn-lg">Submit</button>
-                                        <% if(typeof message!=='undefined' ){ %>
-                                            <p style="color: red;">
-                                              <%= message%>
-                                            </p>
-                            
-                                            <% } %>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                   
-                <!-- </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-<div class="row">
+
+                    
+                
+<div class="row mt-5">
     <div class="col-12">
         <div class="card">
             <form action="/admin/adminCategory" method="post">
-                <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="row d-flex justify-content-center align-items-center mt-5 ">
                     <div class="d-flex flex-row align-items-center mb-4">
                        
                         <div class="form-outline flex-fill mb-0">
@@ -63,10 +17,10 @@
                                 name="category" required />
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <div class="col-2">
+                        <div class="d-flex justify-content-center">
                             <button type="submit" value="Register"
-                                class="btn btn-warning btn-lg">Submit</button>
+                                class="btn btn-warning ">Submit</button>
                                 <% if(typeof message!=='undefined' ){ %>
                                     <p style="color: red;">
                                       <%= message%>
@@ -114,15 +68,15 @@
 
                                         <td>
                                             
-                                                    <% if(category[i-1].isAvaiable){%>
+                                                    <% if(category[i-1].isAvaiable===0){%>
 
-                                                        <a class="btn btn-danger unshow"
-                                                         href="/admin/deleteCategory?id=<%= category[i-1]._id %>"> Hide</a>
+                                                        <a class="btn btn-success show"
+                                                         href="/admin/show-category?id=<%= category[i-1]._id %>">Show</a>
                                                 
                                                          <% } else { %>
                   
-                                                          <a class="btn btn-success show"
-                                                         href="/admin/deletCategory?id=<%= category[i-1]._id %>"> Show</a>
+                                                          <a class="btn btn-danger unshow"
+                                                         href="/admin/block-category?id=<%= category[i-1]._id %>"> Hide</a>
                   
                                                          <% } %>
                                         </td>

@@ -24,14 +24,14 @@
           <% } %>
           <form action="/admin/edit-category/<%=category._id%>" method="post">
             <div class="form-group mb-3">
-              <input type="text" class="form-control form-control-rounded" name="category" id="input-7" value="<%=category.names%>" required>
+              <input type="text" class="form-control form-control-rounded" name="category" id="input-7" required value="<%=category.name%>">
             </div>
             <hr>
             <div class="form-group">
               <button value="submit" class="btn btn-light btn-round"><i class="icon-arrow-right"></i>
                 Update Category</a></button>
-              <a href="/admin/adminCategory" class="btn btn-light btn-round">Category
-                List</a>
+              <a href="/admin/adminCategory" class="btn btn-light btn-round">Show
+                Category</a>
             </div>
           </form>
         </div>

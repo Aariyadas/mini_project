@@ -242,7 +242,8 @@ const addProductLoad = async (req, res) => {
 const editProduct = async (req, res) => {
     try {
 
-
+      adminSession = req.session
+      if (adminSession.adminId){
         const productId = req.query.id
         console.log(productId)
         const productData = await Product.findById({ _id: productId })
@@ -251,7 +252,9 @@ const editProduct = async (req, res) => {
         if (productData) {
             res.render('editProduct', { product: productData, category: categoryData })
         }
-
+      } else {
+        res.redirect('/admin/login')
+      }
     } catch (error) {
         console.log(error.message);
     }
@@ -353,6 +356,7 @@ const showProduct = async (req, res) => {
     }
 }
 const viewCategory = async (req, res) => {
+  console.log('view category')
     const adminSession = req.session
     adminSession.adminId
     const categoryData = await Category.find()
@@ -375,19 +379,48 @@ const addCategory = async (req, res) => {
         }
     }
 }
-const deleteCategory = async (req, res) => {
-    try {
-        const id = req.query.id
-        const categoryData = await Category.findById({ _id: id });
-        if (categoryData.isAvaiable) {
-            await Category.findByIdAndUpdate({ _id: id }, { $set: { isAvaiable: 0 } })
-        } else {
-            await Category.findByIdAndUpdate({ _id: id }, { $set: { isAvaiable: 1 } })
-        }
+
+
+
+const showCategory = async (req, res) => {
+  console.log('show')
+  try {
+    adminSession = req.session
+    if (adminSession.adminId) {
+      console.log('giiiiii')
+      console.log(req.query.id)
+      const categoryData = await Category.findByIdAndUpdate({ _id: req.query.id }, { $set: { isAvaiable: 1 } })
+      console.log(categoryData)
+      if (categoryData) {
         res.redirect('/admin/adminCategory')
-    } catch (error) {
-        console.log(error.message);
+      }
+    } else {
+      res.redirect('/admin/login')
     }
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+const blockCategory = async (req, res) => {
+  console.log('show category')
+  try {
+    console.log('try show')
+    adminSession = req.session
+    if (adminSession.adminId) {
+      console.log('show admin Session')
+      const categoryData = await Category.findByIdAndUpdate({ _id: req.query.id }, { $set: { isAvaiable: 0 } })
+      if (categoryData) {
+        console.log('show category data')
+        res.redirect('/admin/adminCategory')
+      }
+    } else {
+      res.redirect('/admin/login')
+    }
+  } catch (error) {
+    console.log('show catch')
+    console.log(error.message)
+  }
 }
 const editCategory = async (req, res) => {
     try {
@@ -422,6 +455,7 @@ const editCategory = async (req, res) => {
       console.log(error.message)
     }
   }
+  
   
 
 
@@ -703,9 +737,11 @@ module.exports = {
     blockProduct,
     viewCategory,
     addCategory,
-    deleteCategory,
+    showCategory,
+    blockCategory,
     editCategory,
     updateCategory,
+   
     showProduct,
     viewOrder,
     
