@@ -495,7 +495,7 @@ const userDashboard = async (req, res) => {
     console.log(userSession);
     const id=req.session.userId
     // .sort({createdAt:-1})
-    const orderData = await Orders.find({ userId:id});
+    const orderData = await Orders.find({ userId:id}).sort({createdAt:-1});
     console.log('alan');
    console.log(orderData)
     const userData = await User.findById({ _id: userSession.userId });
@@ -524,17 +524,21 @@ const userDashboard = async (req, res) => {
 
 const viewOrder = async (req, res) => {
   try {
+    console.log('alan');
     userSession = req.session;
     if (userSession.userId) {
       const id = req.query.id;
+      console.log(id);
       userSession.currentOrder = id;
-      const orderData = await Orders.findById({ _id: id });
+      const orderData = await Orders.findById({ _id: id })
+       console.log(orderData)
       const userData = await User.find({ id: userSession.userId });
       await orderData.populate("products.item.productId");
       res.render("viewOrder", {
-        isLoggedIn,
+      
         order: orderData,
         user: userData,
+
       });
     } else {
       res.redirect("/login");
@@ -543,6 +547,28 @@ const viewOrder = async (req, res) => {
     console.log(error.message);
   }
 };
+
+// const viewOrder = async (req, res) => {
+//   try {
+//     userSession = req.session;
+//     if (userSession.userId) {
+//       const id = req.query.id;
+//       userSession.currentOrder = id;
+//       const orderData = await Orders.findById({ _id: id });
+//       const userData = await User.find({ id: userSession.userId });
+//       await orderData.populate("products.item.productId");
+//       res.render("viewOrder", {
+//         isLoggedIn,
+//         order: orderData,
+//         user: userData,
+//       });
+//     } else {
+//       res.redirect("/login");
+//     }
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
 
 const cancelOrder = async (req, res) => {
   try {
@@ -558,6 +584,8 @@ const cancelOrder = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
 
 const returnProduct = async (req, res) => {
   try {
@@ -811,7 +839,7 @@ const loadSuccess = async (req, res) => {
   try {
 
     userSession = req.session;
-    console.log(userSession);
+
     if (userSession.userId) {
       const userData = await User.findById({ _id: userSession.userId });
       const productData = await productModel.find();

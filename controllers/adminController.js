@@ -300,6 +300,7 @@ const updateEditProduct = async (req, res) => {
         adminSession = req.session
         const productId = req.params.id
         if (adminSession.adminId) {
+             const files = req.files
             const productData = await Product.findByIdAndUpdate({ _id: productId },
                 {
                     name: req.body.name,
@@ -308,9 +309,12 @@ const updateEditProduct = async (req, res) => {
                     category: req.body.category,
                     description: req.body.description,
                     rating: req.body.rating,
+                    rating: req.body.rating,
+                    image: files.map((x) => x.filename)
 
                 }
             )
+            
             if (productData) {
                 res.redirect('/admin/viewProduct')
             }
