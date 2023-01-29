@@ -4,105 +4,196 @@
 <%- include('../layouts/guestHeader.ejs') %>
 <%}%>
 
-  <div class="hero-wrap hero-bread" style="background-image: url('assets/upload/Background.jpg');">
-    <div class="container">
-      <div class="row no-gutters slider-text align-items-center justify-content-center">
-        <div class="col-md-9 ftco-animate text-center">
-          <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span>
-            <span>Checkout</span>
-            <h1 class="mb-0 bread">Checkout</h1>
-          </p>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-  <div class="tab-pane ml-5 mt-5" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
-    <h2 class="mb-4 mt-5 text-center billing-heading">Billing Details</h2>
-    <!-- <a href="#" class=""> Add Address <i class="icon-edit"></i></a> -->
-  
-    <p class="ml-5">You can select the following Shipping Address.</p>
-  
-  
-    <div class="row ml-5">
-      <%if(userAddress.length>0){
-                for(let key of userAddress){%>
-      <a href="/checkout?addressid=<%=key._id%>">
-        <div class="col-sm-6">
-          <a href="/checkout?addressid=<%=key._id%>">
-            <div class="card card-dashboard" style ="width:50">
-  
-              <a href="/checkout?addressid=<%=key._id%>">
-                <div class="card-body" stlyle>
-                  <h5 class="card-title">Shipping
-                    Address</h5>
-                  <p>
-                    <%= key.firstname %>
-                    <%=key.lastname%><br>
-                    <%= key.address %> , <%= key.address2 %>
-                    <br>
-                    <%= key.city %>
-                    , <%= key.state %>
-                    <%= key.country %>
-                    
-                    <%= key.zip %>
-                    
-                    <%= key.phone %>
-                    <br>
-                    
-                    <a href="#">Edit <i class="icon-edit"></i></a>
-                    <a href="/deleteaddress?id=<%= key._id %>"><i class="icon-close"></i>
-                      delete</a>
+          <div class="hero-wrap hero-bread" style="background-image: url('assets/upload/Background.jpg');">
+            <div class="container">
+              <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                  <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span>
+                    <span>Checkout</span>
+                  <h1 class="mb-0 bread">Checkout</h1>
                   </p>
+
                 </div>
-              </a>
-  
-            </div>
-          </a>
-  
-        </div>
-      </a>
-  
-      <%}}else{%>
-  
-      <div class="col-sm-6">
-        <a href="">
-          <div class="card card-dashboard">
-            <div class="card-body">
-              <h3 class="card-title">Shipping Address
-              </h3>
-  
-              <p>You have not set up
-                address <br>
+              </div>
             </div>
           </div>
+
+          <div class="container-fluid">
+            <div class="row">
+          <div class="cart-detail bg-light p-3 p-md-4">
+            <div class="row justify-content-center">
+              <div class="col col-lg-4 col-md-6 mt-5 cart-wrap ftco-animate bg-light " style="border-color: black;">
+                <form class="mb-5" action="/add-coupon" method="post">
+                  <div class="cart-total mb-3">
+                    <h3  >Coupons</h3>
+                    
+                    <p class="d-flex ">
+                      <span>Subtotal</span>
+                      <span id="sellingPrice">
+                        <% if(id){ %>
+                        ₹ <%= cartProducts.totalPrice %>
+                        <% } %>
+                      </span>
+                    </p>
+                    <p class="d-flex">
+                      <span>Coupon Name</span>
+                      <span id="" name="name">
+                        <% if(offer) { %>
+                        <%= offer.name %>
+                        <% } %>
+                      </span>
+          
+          
+                    </p>
+                    <p class="d-flex">
+                      <span>Discount</span>
+                      <span id="" name="name">
+                        <% if(offer) { %>
+                        <%= offer.discount %>%
+                        <% } %>
+                      </span>
+          
+          
+                    </p>
+          
+                    <div>
+          
+                      <input type="text" class="form-control input-shadow" name="offer" placeholder="Enter Code" id="input">
+                      <div class="d-flex" style="display: flex; align-items: center;">
+          
+                        <button id="btn" class="btn btn-danger mt-2 mr-l-5  px-2">Apply coupon</button>
+                        <% if(couponData){ %>
+                        <% for(let key of couponData){ %>
+                        <h6 class="text-center ml-5" >
+                          <%=key.name%>
+                        </h6>
+          
+                        <% }} %>
+          
+                      </div>
+                    </div>
+                    <section id="message" class="text-danger">
+          
+                    </section>
+                    <hr>
+                    <p class="d-flex total-price" >
+                      <span>Total</span>
+                      <span id="sellingPric" >
+                        <%if(cartProducts.totalPrice >=offer.minimumBill){%>
+                        <%if(couponData){%>
+                        ₹ <%=couponTotal %>
+                        <%}else{%>
+                        ₹ <%=cartProducts.totalPrice %>
+          
+                        <%}%>
+          
+                                        <%}else{%>
+                        <h6 style="color: brown;">you need to add <%=offer.minimumBill%></h6>
+                        <h5 style="color: aliceblue;">Total: <%=cartProducts.totalPrice%></h5>
+                        <%}%>
+                                                               </span>
+          
+                                  </p>
+          
+                              </form>
+                              <% if(noCoupon===true){%>
+                        <p style="color:red"> Already Used</p>
+                        <%}%>
+                                  <div class="size-209 p-t-1">
+                                    <span class="mtext-110 cl2">
+          
+                                    </span>
+                                  </div>
+          
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+
+          <div class="container">
+            <div class="tab-pane ml-5 mt-5" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+              <h2 class="mb-4 mt-5 text-center billing-heading">Billing Details</h2>
+              <!-- <a href="#" class=""> Add Address <i class="icon-edit"></i></a> -->
+
+              <p class="ml-5">You can select the following Shipping Address.</p>
+
+
+              <div class="row ml-5">
+                <%if(userAddress.length>0){
+                  for(let key of userAddress){%>
+<a href="/checkout?addressid=<%=key._id%>">
+  <div class="col-sm-6">
+    <a href="/checkout?addressid=<%=key._id%>">
+      <div class="card card-dashboard" style="width:50">
+
+        <a href="/checkout?addressid=<%=key._id%>">
+          <div class="card-body" stlyle>
+            <h5 class="card-title">Shipping
+              Address</h5>
+            <p>
+              <%= key.firstname %>
+              <%=key.lastname%><br>
+              <%= key.address %> , <%= key.address2 %>
+              <br>
+              <%= key.city %>
+              , <%= key.state %>
+              <%= key.country %>
+
+              <%= key.zip %>
+
+              <%= key.phone %>
+              <br>
+
+              <a href="#">Edit <i class="icon-edit"></i></a>
+              <a href="/deleteaddress?id=<%= key._id %>"><i class="icon-close"></i>
+                delete</a>
+            </p>
+          </div>
         </a>
+
       </div>
-      <%}%>
-    </div>
+    </a>
+
   </div>
+</a>
+
+<%}}else{%>
+
+<div class="col-sm-6">
+  <a href="">
+    <div class="card card-dashboard">
+      <div class="card-body">
+        <h3 class="card-title">Shipping Address
+        </h3>
+
+        <p>You have not set up
+          address <br>
+      </div>
+    </div>
+  </a>
 </div>
-  
-  <section class="ftco-section">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-8 ftco-animate">
-          <form action="/checkout" method="post" class="billing-form">
-            <% if(addSelect){ %>
+<%}%>
+              </div>
+            </div>
+          </div>
+
+          <section class="ftco-section">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-xl-8 ftco-animate">
+                  <form action="/checkout" method="post" class="billing-form">
+                    <% if(addSelect){ %>
 <%if(addSelect!=null){%>
 
 
 
 
-  
- 
 
 <div class="row align-items-end">
   <div class="col-md-6">
     <div class="form-group">
-      <label for="firstname">Firt Name</label>
+      <label for="firstname">First Name</label>
       <input type="text" class="form-control" name="firstname" value="<%= addSelect.firstname %>" required>
     </div>
   </div>
@@ -113,7 +204,7 @@
       <input type="text" class="form-control" name="lastname" value="<%= addSelect.lastname %>" required>
     </div>
   </div>
-  
+
   <div class="col-md-6">
     <div class="form-group">
       <label for="country">State / Country</label>
@@ -137,20 +228,20 @@
   </div>
 
 
-<div class="w-100"></div>
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="zip">Postcode / ZIP *</label>
-    <input type="text" class="form-control" name="zip" value="<%= addSelect.zip %>" required>
+  <div class="w-100"></div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="zip">Postcode / ZIP *</label>
+      <input type="text" class="form-control" name="zip" value="<%= addSelect.zip %>" required>
+    </div>
   </div>
-</div>
 
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="email">State</label>
-    <input type="text" name="state" class="form-control" value="<%= addSelect.state %>" required>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="email">State</label>
+      <input type="text" name="state" class="form-control" value="<%= addSelect.state %>" required>
+    </div>
   </div>
-</div>
 </div>
 <% }else{ %>
 <h1>NO ADDRESS</h1>
@@ -193,72 +284,27 @@
   </div>
 
 
-<div class="w-100"></div>
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="city">Town / City</label>
-    <input type="text" class="form-control" required>
-  </div>
-</div>
-<div class="col-md-6">
-  <div class="form-group">
-    <label for="zip">Postcode / ZIP *</label>
-    <input type="text" class="form-control" required>
-  </div>
-</div>
-
-<% }%>
-
-
-
-
-
-
-
-  
-  </div>
-  
- 
-
-
-
-          <div class="row mt-5 pt-3 ml-5 d-flex">
-            <div class="col-md-4  d-flex">
-
-              <div class="cart-detail cart-total bg-light p-3 p-md-4">
-                <h3 class="billing-heading mb-4">Cart Total</h3>
-                <p class="d-flex">
-
-                <p class="d-flex">
-                  <span>SubTotal</span>
-                  <span>
-                    <% if(id){ %>
-      ₹ <%= cartProducts.totalPrice %>
-      <% } %>
-      </span>
-      </p>
-
-      <hr>
-      <p class="d-flex total-price">
-
-        <span>Total</span>
-        <span>
-
-          <% if(couponTotal) { %>
-
-          <span id="total">₹ <%= couponTotal%></span>
-          <% }else{ %>
-          <%= cartProducts.totalPrice %>
-          <% } %>
-
-        </span>
-
-      </p>
-
-
+  <div class="w-100"></div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="city">Town / City</label>
+      <input type="text" class="form-control" required>
     </div>
   </div>
   <div class="col-md-6">
+    <div class="form-group">
+      <label for="zip">Postcode / ZIP *</label>
+      <input type="text" class="form-control" required>
+    </div>
+  </div>
+
+  <% }%>
+
+
+
+
+
+  <div class="col-md-12">
     <div class="cart-detail bg-light p-3 p-md-4">
       <h3 class="billing-heading mb-4">Payment Method</h3>
       <div class="form-group">
@@ -282,7 +328,8 @@
       <div class="form-group">
         <div class="col-md-12">
           <div class="checkbox">
-            <label><input type="checkbox" value="" class="mr-2"> I have read and accept the
+            <label><input type="checkbox" value="" class="mr-2"> I have read and accept
+              the
               terms and conditions</label>
           </div>
         </div>
@@ -297,47 +344,55 @@
 </div>
 </div>
 </form>
-</div>
-</section>
-
-<%- include('../layouts/footer.ejs') %>
 
 
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-  </svg></div>
+
+            </div>
+            </div>
+
+            </div>
+            
+            </div>
+          </section>
+
+          <%- include('../layouts/footer.ejs') %>
 
 
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
-<script src="/assets/js/popper.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/jquery.easing.1.3.js"></script>
-<script src="/assets/js/jquery.waypoints.min.js"></script>
-<script src="/assets/js/jquery.stellar.min.js"></script>
-<script src="/assets/js/owl.carousel.min.js"></script>
-<script src="/assets/js/jquery.magnific-popup.min.js"></script>
-<script src="/assets/js/aos.js"></script>
-<script src="/assets/js/jquery.animateNumber.min.js"></script>
-<script src="/assets/js/bootstrap-datepicker.js"></script>
-<script src="/assets/js/scrollax.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="/assets/js/google-map.js"></script>
-<script src="/assets/js/main.js"></script>
-<script>
-  let rdbtns = document.querySelectorAll("input[name='optradio']")
-  let output = document.querySelector("#payment")
+              <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+                  <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+                  <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+                </svg></div>
 
-  function selected() {
-    let selected = document.querySelector("input[name='optradio']:checked").value
-    output.value = selected
-  }
-  rdbtns.forEach(x => {
-    x.addEventListener('change', selected)
-  })
-</script>
 
-</body>
+              <script src="/assets/js/jquery.min.js"></script>
+              <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
+              <script src="/assets/js/popper.min.js"></script>
+              <script src="/assets/js/bootstrap.min.js"></script>
+              <script src="/assets/js/jquery.easing.1.3.js"></script>
+              <script src="/assets/js/jquery.waypoints.min.js"></script>
+              <script src="/assets/js/jquery.stellar.min.js"></script>
+              <script src="/assets/js/owl.carousel.min.js"></script>
+              <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+              <script src="/assets/js/aos.js"></script>
+              <script src="/assets/js/jquery.animateNumber.min.js"></script>
+              <script src="/assets/js/bootstrap-datepicker.js"></script>
+              <script src="/assets/js/scrollax.min.js"></script>
+              <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+              <script src="/assets/js/google-map.js"></script>
+              <script src="/assets/js/main.js"></script>
+              <script>
+                let rdbtns = document.querySelectorAll("input[name='optradio']")
+                let output = document.querySelector("#payment")
 
-</html>
+                function selected() {
+                  let selected = document.querySelector("input[name='optradio']:checked").value
+                  output.value = selected
+                }
+                rdbtns.forEach(x => {
+                  x.addEventListener('change', selected)
+                })
+              </script>
+
+              </body>
+
+              </html>

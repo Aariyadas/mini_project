@@ -278,7 +278,7 @@
                           const pcounts = count.value.split(",");
         
                           new Chart(ctx, {
-                            type: "line",
+                            type: "bar",
                             data: {
                               labels: pnames,
                               datasets: [
@@ -304,7 +304,7 @@
                         <div class="card">
                           <canvas id="myAnotherChart"></canvas>
                           <input type="hidden" value="<%=category %>" id="category" />
-                          <input type="hidden" value="<%=count%>" id="count" />
+                          <input type="hidden" value="<%=pcount%>" id="pcount" />
                         </div>
         
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -312,12 +312,12 @@
                         <script>
                           const cty = document.getElementById("myAnotherChart");
                           const catname = document.getElementById("category");
-                          const catcount = document.getElementById("count");
+                          const catcount = document.getElementById("pcount");
                           const catnames = catname.value.split(",");
                           const catcounts = catcount.value.split(",");
         
                           new Chart(cty, {
-                            type: "bar",
+                            type: "line",
                             data: {
                               labels: catnames,
                               datasets: [

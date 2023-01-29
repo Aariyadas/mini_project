@@ -40,6 +40,7 @@ const verifyLogin = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
         const userData = await User.findOne({ email: email });
+        console.log(userData._id)
         if (userData) {
             const passwordMatch = await bcrypt.compare(password, userData.password);
             if (passwordMatch) {
@@ -77,6 +78,7 @@ const loadDashboard = async (req, res) => {
       console.log("admin");
       adminSession = req.session;
       if (isAdminLoggedin) {
+        console.log("Adminloog")
         const productData = await Product.find();
         const userData = await User.find({ is_admin: 0 });
         const categoryData = await Category.find();
@@ -170,6 +172,7 @@ const loadDashboard = async (req, res) => {
       console.log(error.message);
     }
   };
+
 const isLogout = async (req, res) => {
     try {
         const adminSession = req.session
@@ -309,7 +312,7 @@ const updateEditProduct = async (req, res) => {
                     category: req.body.category,
                     description: req.body.description,
                     rating: req.body.rating,
-                    rating: req.body.rating,
+                
                     image: files.map((x) => x.filename)
 
                 }
@@ -368,9 +371,11 @@ const viewCategory = async (req, res) => {
 }
 
 const addCategory = async (req, res) => {
-    const categoryData = await Category.findOne({ name: req.body.category })
+  const category=req.body.category
+    const categoryData = await Category.findOne({ name:{ $regex: new RegExp("^" + category.toUpperCase(), "i") } })
+    const categoryName= await Category.find({})
     if (categoryData) {
-        res.render('adminCategory', { category: categoryData, message: 'Category already Exists' })
+        res.render('adminCategory', { category: categoryName, message: 'Category already Exists' })
     } else {
         try {
             const category = Category({
@@ -488,6 +493,7 @@ const viewOrder = async(req,res)=>{
       await key.populate('products.item.productId');
       await key.populate('userId');
     }
+    console.log(orderData[0].userId.name)
     if (orderType == undefined) {
       res.render('adminOrder', {
         users: userData,
@@ -520,20 +526,27 @@ const updateOrderStatus = async (req, res) => {
     }
 }
 
-// const adminOrderDetails = async(req,res)=>{
-//   try {
-//       const id = req.query.id
-//       const orderData = await Orders.findById({_id:id});
-//       await orderData.populate('products.item.productId');
-//       await orderData.populate('userId')
-//  res.render('adminOrder',{
-//   order:orderData,
+const adminOrderDetails = async(req,res)=>{
+  try {
+      // const adminSession = req.session
+      // adminSession.adminId
+      const id = req.query.id
+      const orderData = await Order.findById({_id:id});
+      
+      const completeProduct = await orderData.populate('products.item.productId');
+      await orderData.populate('userId')
+      // const productData = await Product.find()
+ res.render('adminViewOrder',{
+  order:orderData,
+  product:completeProduct.products
+ })
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
-//  })
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
+
+
 
 
 const getBanners = async (req, res) => {
@@ -599,7 +612,9 @@ const adminAddOffer = async (req,res) => {
         const offer = Coupon({
             name:req.body.name,
             type:req.body.type,
-            discount:req.body.discount
+            discount:req.body.discount,
+            minimumBill:req.body.minimumBill,
+            expirydate:req.body.expirydate,
         })
         await offer.save()
         res.redirect("/admin/admin-offer")
@@ -679,7 +694,8 @@ const orderDownload = async function(req,res){
       workSheet.columns=[
         {header:"S no.",key:"s_no"},
       {header:"UserId",key:"userId"},
-      {header:"Amount",key:"products.totalPrice"},
+    
+      {header:"Amount",key:"amount"},
       {header:"Payment",key:"payment"},
       {header:"Country",key:"country"},
       {header:"Address",key:"address"},
@@ -693,7 +709,8 @@ const orderDownload = async function(req,res){
   
       let counter =1;
   
-      const orderData = await Order.find({});
+      const orderData = await Order.find({status:"Delivered"});
+      console.log(orderData);
   
       orderData.forEach(function(orders){
         orders.s_no = counter;
@@ -745,9 +762,10 @@ module.exports = {
     blockCategory,
     editCategory,
     updateCategory,
-   
+     
     showProduct,
     viewOrder,
+    adminOrderDetails,
     
     orderDownload,
     getBanners,

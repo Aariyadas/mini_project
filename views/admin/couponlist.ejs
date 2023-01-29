@@ -21,6 +21,9 @@
                     <th>Items</th>
                     <th>Type</th>
                     <th>Discount</th>
+                    <th>minimumBill</th>
+                    <th>Expiry Date</th>
+
                     <th>Action</th>
                 </tr>
                 <tr>
@@ -38,6 +41,12 @@
                     </td>
                     <td>
                         <%=coupon[i].discount%>
+                    </td>
+                    <td>
+                        <%=coupon[i].minimumBill%>
+                    </td>
+                    <td>
+                        <%=coupon[i].expirydate%>
                     </td>
                     <td>
                         <%if(coupon[i].isActive===0){%>

@@ -99,63 +99,7 @@
               <% } %>
               </span>
               </p>
-              <p class="d-flex">
-                <span>Coupon Name</span>
-                <span id="" name="name">
-                  <% if(offer) { %>
-                  <%= offer.name %>
-                  <% } %>
-                </span>
-
-
-              </p>
-              <p class="d-flex">
-                <span>Discount</span>
-                <span id="" name="name">
-                  <% if(offer) { %>
-                  <%= offer.discount %>%
-                  <% } %>
-                </span>
-
-
-              </p>
-
-              <div>
-
-                <input type="text" class="form-control input-shadow" name="offer" placeholder="Enter Code" id="input">
-				<div class="d-flex" style="display: flex; align-items: center;">
-				<button id="btn" class="btn btn-danger mt-2 mr-l-5  px-2">Apply coupon</button>
-                
-                    <% if(couponData){ %>
-                    <% for(let key of couponData){ %>
-                    <h6 class="text-center ml-5" ><%=key.name%></h6>
-
-                    <% }} %>
-                  
-                </div>
-              </div>
-              <section id="message" class="text-danger">
-
-              </section>
-              <hr>
-              <p class="d-flex total-price">
-                <span>Total</span>
-                <span id="sellingPric">
-                  ₹ <%= couponTotal%>
-                </span>
-
-              </p>
-
-        </div>
-        </form>
-        <% if(noCoupon===true){%>
-        <p style="color:red"> Already Used</p>
-        <%}%>
-						<div class="size-209 p-t-1">
-							<span class="mtext-110 cl2">
-	
-							</span>
-						</div>
+              						</div>
 						<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">Proceed to
 								Checkout</a></p>
 					</div>

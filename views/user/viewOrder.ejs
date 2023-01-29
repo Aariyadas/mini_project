@@ -42,10 +42,7 @@
                           </span>!</h5>
                   </div>
                   <div class="card-body p-4">
-                      <div class="d-flex justify-content-between align-items-center mb-4">
-                          <p class="lead fw-normal mb-0" style="color: #4304ff;"></p>
-                          <p class="small text-muted mb-0">Receipt Voucher : NAN</p>
-                      </div>
+                      
 
                       <% for(let i=0;i<order.products.item.length;i++){ %>
 
@@ -64,22 +61,17 @@
                                           </p>
                                       </div>
                                       
-                                      <div
-                                          class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                          <p class="text-muted mb-0 small">Category:<%=
-                                                  order.products.item[i].productId.category %>
-                                          </p>
-                                      </div>
+                                      
                                       <div
                                           class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                           <p class="text-muted mb-0 small">Quantity:<%=
-                                                  order.products.item[i].quantity %>
+                                                  order.products.item[i].qty %>
                                           </p>
                                       </div>
                                       <div
                                           class="col-md-2 text-center d-flex justify-content-center align-items-center">
                                           <p class="text-dark mb-0 small">₹<%=
-                                                  order.products.item[i].productId.price %>
+                                                  order.products.item[i].price %>
                                           </p>
                                       </div>
                                       
@@ -129,7 +121,7 @@
                                       </p>
                                   <%}else{%>
                                       <p class="text-muted mb-0"><span
-                                          class="fw-bold me-4">Total</span> ₹
+                                          class="fw-bold me-4"> SubTotal</span> ₹
                                       <%=order.products.totalPrice %>
                                   </p>
                                  <% }%>
@@ -138,10 +130,7 @@
                               <div class="d-flex justify-content-between pt-2">
                                   <p class="text-muted mb-0">Invoice Number : <%= order._id %>
                                   </p>
-                                  <p class="text-muted mb-0"><span
-                                          class="fw-bold me-4">Discount</span> ₹ 
-
-                                  </p>
+                                  
                               </div>
 
                               <div class="d-flex justify-content-between">
@@ -151,7 +140,7 @@
                               </div>
 
                               <div class="d-flex justify-content-between mb-5">
-                                  <p class="text-muted mb-0">Recepits Voucher : <%= order.offer %> = <%=order.discount%>% </p>
+                                 
                                   <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery
                                           Charges</span> Free</p>
                               </div>
@@ -161,7 +150,7 @@
                       <h5
                           class="d-flex align-items-center justify-content-end text-black text-uppercase mb-0">
                           Total
-                          paid: <span class="h2 mb-0 ms-2"> ₹ <%=order.products.totalPrice %>
+                          paid: <span class="h2 mb-0 ms-2"> ₹ <%=order.amount%>
                                   </span>
                       </h5>
                   </div>

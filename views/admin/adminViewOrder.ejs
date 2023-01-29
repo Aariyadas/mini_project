@@ -1,0 +1,56 @@
+<%- include('../layouts/adminHeader.ejs') %>
+
+    
+
+
+<div class="container mt-5">
+  <div class="row bootstrap snippets bootdeys">
+    <div class="col-md-8 col-sm-12">
+      <div class="">
+        <div class="panel panel-info">
+          <div class="panel-heading text-center">
+            <h3>View Order</h3>
+          </div>
+          <div class="panel-body">
+            <% if(typeof message!="undefined" ){ %>
+            <p class="text-danger">
+              <%= message %>
+            </p>
+            <%}%>
+            <table class="table" style=" text-align: center; color: white;">
+                <tr>
+                    <th>Product</th>
+                    
+
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                    
+                    
+
+                </tr>
+                <tr>
+                    <% for(let key of product.item) { %>
+                <tr>
+                    
+                        <td><%= key.productId.name%>&nbsp<img src="/banners/<%=key.productId.image[0]%>" alt="img" style="width: 50px;"></td>
+                        
+                        <td><%=key.qty%></td>
+                        <td><%=key.price %></td>
+                        <td><%= key.price*key.qty %></td>
+                        
+                       
+                    <% } %>
+                
+            </table>
+            <h2 class="text-center text-light" style="background-color:rgb(143, 137, 137);">Cart Total Price:
+            <%=order.amount%></h2> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ 

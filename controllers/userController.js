@@ -14,7 +14,7 @@ const cors = require("cors");
 
 let isLoggedIn;
 isLoggedIn = false;
- let userSession = false || {}
+let userSession = false || {}
 // let userSession
 let offer = {
   name: 'None',
@@ -22,7 +22,7 @@ let offer = {
   discount: 0,
   usedBy: false
 }
-let couponTotal=0
+let couponTotal = 0
 let noCoupon;
 let newUser;
 let newOtp;
@@ -89,12 +89,12 @@ const loadLanding = async (req, res) => {
     const userSession = req.session
     const id = req.session.userId;
     if (id) {
-      userSession.offer=offer
-      userSession.couponTotal=couponTotal
+      userSession.offer = offer
+      userSession.couponTotal = couponTotal
       var userData = await User.find({ _id: id });
       var cartLength = userData[0].cart.item.length;
       var userName = req.session.userName;
-      
+
     }
     res.render("home", {
       isLoggedIn,
@@ -102,7 +102,7 @@ const loadLanding = async (req, res) => {
       length: cartLength,
       userName,
       category,
-      id:userSession.userId
+      id: userSession.userId
     });
   } catch (error) {
     console.log(error.message);
@@ -136,7 +136,7 @@ const insertUser = async (req, res) => {
       password: spassword,
       cpassword: req.body.cpassword,
     });
-    
+
     const userData = await user.save();
     newUser = userData._id;
     console.log(userData);
@@ -151,21 +151,21 @@ const insertUser = async (req, res) => {
 };
 
 const verifyLogin = async (req, res) => {
-  
+
   try {
-    
+
     const email = req.body.email;
     const password = req.body.password;
     const userData = await User.findOne({ email: email });
     if (userData) {
-      
+
       const passwordMatch = await bcrypt.compare(password, userData.password);
       if (passwordMatch) {
         if (userData.is_verified === 0) {
           res.render("login", { message: "This User is blocked" });
         } else {
           if (userData.is_admin === 1) {
-            
+
             res.render("register", { message: "Not an user" });
           } else {
             userSession = req.session;
@@ -201,7 +201,7 @@ const userLogout = async (req, res) => {
     userSession = req.session;
     userSession.userId = null;
     isLoggedIn = false;
-    
+
     res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -211,29 +211,30 @@ const userLogout = async (req, res) => {
 
 
 const getCategoryProduct = async (req, res) => {
-    try {
-      
-      
-        const userId = req.session.userId;
-        if(userId){
-          isLoggedIn=true
-        }else{
-          isLoggedIn=false
-        }
-        var userName = req.session.userName;
-        const userData = await User.find({ _id: userId });
-        const categor = req.query.category;
-        
-    
-        const category = await Category.find()
-        const products = await productModel.find({ category: categor });
-        
-        console.log(products);
-        res.render("categoryProduct", { category, products, categor, userData,userName,isLoggedIn
-          });
-    } catch (error) {
-        console.log(error.message);
+  try {
+
+
+    const userId = req.session.userId;
+    if (userId) {
+      isLoggedIn = true
+    } else {
+      isLoggedIn = false
     }
+    var userName = req.session.userName;
+    const userData = await User.find({ _id: userId });
+    const categor = req.query.category;
+
+
+    const category = await Category.find()
+    const products = await productModel.find({ category: categor });
+
+    console.log(products);
+    res.render("categoryProduct", {
+      category, products, categor, userData, userName, isLoggedIn
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 const singleProduct = async (req, res) => {
@@ -243,29 +244,31 @@ const singleProduct = async (req, res) => {
     const id = req.query.id;
     const products = await productModel.find();
     const category = await Category.find()
-    const productData = await productModel.findOne({ _id: id });
     var userData = await User.find({ _id: userSession.userId });
     var userName = req.session.userName;
     console.log(userData)
-    // var cartLength = userData[0].cart.item.length;
-    if (productData) {
-      res.render("singleProduct", {
-        isLoggedIn,
-        product: productData,
-        products: products,
-        userSession: userSession.userId,
-        id: id,
-        category,
-        userName
-        // length: cartLength,
-      });
-    } else {
-      res.redirect("/viewProduct");
-    }
+    const productData = await productModel.findOne({ _id: id }).exec(async function (err, productData) {
+      ;
+      // var cartLength = userData[0].cart.item.length;
+      if (productData) {
+        res.render("singleProduct", {
+          isLoggedIn,
+          product: productData,
+          products: products,
+          userSession: userSession.userId,
+          id: id,
+          category,
+          userName
+          // length: cartLength,
+        });
+      } else if (err) {
+        res.redirect('*')
+      }
+    })
   } catch (error) {
     console.log(error.message);
   }
-};
+}
 
 const loadCart = async (req, res) => {
   console.log("loadcart");
@@ -277,15 +280,15 @@ const loadCart = async (req, res) => {
       const completeUser = await userData.populate("cart.item.productId");
       const category = await Category.find()
       var cartLength = userData.cart.item.length;
-      const couponData=await Coupon.find()
+      const couponData = await Coupon.find()
       console.log(couponData)
-      noCoupon=false
-      if(userSession.couponTotal == 0) {
+      noCoupon = false
+      if (userSession.couponTotal == 0) {
         userSession.couponTotal = userData.cart.totalPrice
-        
-    }
-    
-      
+
+      }
+
+
       res.render("cart", {
         isLoggedIn: true,
         id: userSession.userId,
@@ -293,15 +296,15 @@ const loadCart = async (req, res) => {
         length: cartLength,
         category,
         userName,
-        offer:userSession.offer,
-        couponTotal:userSession.couponTotal,
+        offer: userSession.offer,
+        couponTotal: userSession.couponTotal,
         noCoupon,
         couponData
 
       });
     } else {
-      
-      res.render("home", { isLoggedIn: false, id: userSession.userId,category,offer:userSession.offer,couponTotal:userSession.couponTotal,noCoupon,couponData});
+
+      res.render("home", { isLoggedIn: false, id: userSession.userId, category, offer: userSession.offer, couponTotal: userSession.couponTotal, noCoupon, couponData });
     }
   } catch (error) {
     console.log(error);
@@ -337,63 +340,61 @@ const deleteCart = async (req, res, next) => {
   }
 };
 
-const addCoupon = async (req,res) =>{
+const addCoupon = async (req, res) => {
   try {
-      userSession = req.session
-      if(userSession.userId) {
-          console.log('user id '+userSession.userId)
-          
-          const userData = await User.findById({_id:userSession.userId})
-          const completeUser = await userData.populate("cart.item.productId");
-          const offerData = await Coupon.findOne({name:req.body.offer})
-          const couponData =await Coupon.find()
+    userSession = req.session
+    if (userSession.userId) {
+      console.log('user id ' + userSession.userId)
 
-         //
-        //  let offername = req.body.offer
-          // console.log("coupon name :"+ offername)
-          // console.log(offerData)
-          if(offerData){
-              console.log(offerData)
+      const userData = await User.findById({ _id: userSession.userId })
+      const completeUser = await userData.populate("cart.item.productId");
+      const offerData = await Coupon.findOne({ name: req.body.offer })
+      const couponData = await Coupon.find()
+      const addressData = await Address.find({ userId: userSession.userId });
+      const selectAddress = await Address.findOne({ _id: userSession.userId });
 
-              if(offerData.usedBy != userSession.userId) {
-                console.log(userSession);
-                noCoupon=false
-                  userSession.offer.name = offerData.name
-                  userSession.offer.type  = offerData.type
-                  userSession.offer.discount  = offerData.discount
-                  let updatedTotal = userData.cart.totalPrice - (userData.cart.totalPrice*userSession.offer.discount)/100
+      //  let offername = req.body.offer
+      // console.log("coupon name :"+ offername)
+      // console.log(offerData)
+      if (offerData) {
+        console.log(offerData)
 
-                  userSession.couponTotal = updatedTotal
-                  res.render('cart',{isLoggedIn: true,
-                    id: userSession.userId,
-                    cartProducts: completeUser.cart,
-                    
-                  couponData,
-                    offer:userSession.offer,
-                    couponTotal:userSession.couponTotal,
-                    noCoupon:false
-            })
+        if (offerData.usedBy != userSession.userId) {
+          console.log(userSession);
+          noCoupon = false
+          userSession.offer.name = offerData.name
+          userSession.offer.type = offerData.type
+          userSession.offer.discount = offerData.discount
+          userSession.offer.minimumBill = offerData.minimumBill
+          userSession.offer.expirydate = offerData.expirydate
 
-              } else {
-                noCoupon=true
-                  userSession.offer.usedBy = true
-                  res.render('cart',{noCoupon:true,isLoggedIn: true,
-                    id: userSession.userId,
-                    cartProducts: completeUser.cart,
-                    couponData,
-                  
-                    offer:userSession.offer,
-                    couponTotal:userSession.couponTotal})              }
 
-          } else {
-              res.redirect('/cart')
+          if (userData.cart.totalPrice >= offerData.minimumBill) {
+            let updatedTotal = userData.cart.totalPrice - (userData.cart.totalPrice * userSession.offer.discount) / 100
+
+            userSession.couponTotal = updatedTotal
+            couponTotal = updatedTotal
+            res.redirect('/checkout')
           }
+          
+
+
+        } else {
+          noCoupon = true
+          userSession.offer.usedBy = true
+          couponTotal=userData.cart.totalPrice
+          res.redirect('/checkout')
+        }
+
       } else {
-          res.redirect('/cart')
+        res.redirect('/checkout')
       }
+    } else {
+      res.redirect('/checkout')
+    }
 
   } catch (error) {
-      console.log(error.message)
+    console.log(error.message)
   }
 }
 
@@ -402,28 +403,28 @@ const addCoupon = async (req,res) =>{
 
 const changeProductQnty = async (req, res) => {
   try {
-      const id = req.query.id;
-      console.log(id);
-      const userData = await User.findById({ _id: req.session.userId });
+    const id = req.query.id;
+    console.log(id);
+    const userData = await User.findById({ _id: req.session.userId });
     console.log(userData);
-      const foundProduct = userData.cart.item.findIndex((x) => x.productId == id);
-      console.log(foundProduct);
-      const qty = { a: parseInt(req.body.qty) };
-      console.log(qty);
-      console.log(userData.cart.item[foundProduct].qty );
-      userData.cart.item[foundProduct].qty = qty.a;
-      
-      const price = userData.cart.item[foundProduct].price;
-      userData.cart.totalPrice = 0;
+    const foundProduct = userData.cart.item.findIndex((x) => x.productId == id);
+    console.log(foundProduct);
+    const qty = { a: parseInt(req.body.qty) };
+    console.log(qty);
+    console.log(userData.cart.item[foundProduct].qty);
+    userData.cart.item[foundProduct].qty = qty.a;
 
-      const totalPrice = userData.cart.item.reduce((acc, curr) => {
-          return acc + curr.price * curr.qty;
-      }, 0);
-      userData.cart.totalPrice = totalPrice;
-      await userData.save();
-      res.json({ totalPrice, price });
+    const price = userData.cart.item[foundProduct].price;
+    userData.cart.totalPrice = 0;
+
+    const totalPrice = userData.cart.item.reduce((acc, curr) => {
+      return acc + curr.price * curr.qty;
+    }, 0);
+    userData.cart.totalPrice = totalPrice;
+    await userData.save();
+    res.json({ totalPrice, price });
   } catch (error) {
-      console.log(error.message);
+    console.log(error.message);
   }
 };
 
@@ -435,11 +436,11 @@ const loadWishlist = async (req, res) => {
       const userData = await User.findById({ _id: userSession.userId });
       var userName = req.session.userName;
       const category = await Category.find()
-      
+
       var cartLength = userData.cart.item.length;
-     
+
       const completeUser = await userData.populate("wishlist.item.productId");
-      
+
       console.log(completeUser);
       res.render("wishlist", {
         isLoggedIn,
@@ -450,7 +451,7 @@ const loadWishlist = async (req, res) => {
         userName
       });
     } else {
-      res.render("wishlist", { isLoggedIn, id: userSession.userId,userName});
+      res.render("wishlist", { isLoggedIn, id: userSession.userId, userName });
     }
   } catch (error) {
     console.log(error.message);
@@ -468,12 +469,12 @@ const addToWishlist = async (req, res) => {
 
 const addCartdelWishlist = async (req, res) => {
   const productId = req.query.id;
-  
+
   userSession = req.session;
   const userData = await User.findById({ _id: userSession.userId });
   const productData = await productModel.findById({ _id: productId });
   const add = await userData.addToCart(productData);
-  
+
   if (add) {
     await userData.removefromWishlist(productId);
     res.redirect("/cart");
@@ -493,11 +494,11 @@ const userDashboard = async (req, res) => {
 
     userSession = req.session
     console.log(userSession);
-    const id=req.session.userId
+    const id = req.session.userId
     // .sort({createdAt:-1})
-    const orderData = await Orders.find({ userId:id}).sort({createdAt:-1});
+    const orderData = await Orders.find({ userId: id }).sort({ createdAt: -1 });
     console.log('alan');
-   console.log(orderData)
+    console.log(orderData)
     const userData = await User.findById({ _id: userSession.userId });
     const addressData = await Address.find({ userId: userSession.userId });
     const category = await Category.find()
@@ -505,39 +506,41 @@ const userDashboard = async (req, res) => {
 
     var userName = req.session.userName;
     res.render("dashboard", {
-      isLoggedIn:true,
+      isLoggedIn: true,
       user: userData,
       userAddress: addressData,
       userOrders: orderData,
-      
+
       id: userSession.userId,
       category,
       length: cartLength,
       userName
 
     });
-  }  catch (error) {
+  } catch (error) {
     console.log(error.message)
   }
 }
- 
+
 
 const viewOrder = async (req, res) => {
   try {
-    console.log('alan');
+    
     userSession = req.session;
     if (userSession.userId) {
       const id = req.query.id;
       console.log(id);
       userSession.currentOrder = id;
       const orderData = await Orders.findById({ _id: id })
-       console.log(orderData)
+      console.log(orderData)
       const userData = await User.find({ id: userSession.userId });
       await orderData.populate("products.item.productId");
+      const couponData = await Coupon.find()
       res.render("viewOrder", {
-      
+
         order: orderData,
         user: userData,
+        couponData
 
       });
     } else {
@@ -548,35 +551,18 @@ const viewOrder = async (req, res) => {
   }
 };
 
-// const viewOrder = async (req, res) => {
-//   try {
-//     userSession = req.session;
-//     if (userSession.userId) {
-//       const id = req.query.id;
-//       userSession.currentOrder = id;
-//       const orderData = await Orders.findById({ _id: id });
-//       const userData = await User.find({ id: userSession.userId });
-//       await orderData.populate("products.item.productId");
-//       res.render("viewOrder", {
-//         isLoggedIn,
-//         order: orderData,
-//         user: userData,
-//       });
-//     } else {
-//       res.redirect("/login");
-//     }
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+
 
 const cancelOrder = async (req, res) => {
   try {
     userSession = req.session;
     if (userSession.userId) {
       const id = req.query.id;
-      await Orders.deleteOne({ _id: id });
+      console.log(id);
+      const orderData = await Orders.findByIdAndUpdate({ _id: id },{$set:{status:'Canceled'}});
+      if(orderData){
       res.redirect("/viewOrder");
+      }
     } else {
       res.redirect("/login");
     }
@@ -592,7 +578,7 @@ const returnProduct = async (req, res) => {
     userSession = req.session;
     if ((userSession = req.session)) {
       const id = req.query.id;
-     console.log(id)
+      console.log(id)
 
       const productOrderData = await Orders.findById({
         _id: ObjectID(userSession.currentOrder),
@@ -665,26 +651,28 @@ const editUser = async (req, res) => {
     const password1 = req.body.password1
     const password2 = req.body.password2
     const password3 = req.body.password3
-    console.log('userSession : '+userSession.userId)
-    const userData = await User.findById({_id : userSession.userId})
+    console.log('userSession : ' + userSession.userId)
+    const userData = await User.findById({ _id: userSession.userId })
     if (userData) {
       const passwordMatch = await bcrypt.compare(password1, userData.password)
       if (passwordMatch) {
-        if(password2 === password3){
-        const spassword = await securePassword(req.body.password2)
-      await User.findByIdAndUpdate(
-        { _id: userSession.userId },
-        {
-          $set: {
-            name: req.body.name,
-            email: req.body.email,
-            mobile: req.body.mobile,
-            password: spassword
-          },
+        if (password2 === password3) {
+          const spassword = await securePassword(req.body.password2)
+          await User.findByIdAndUpdate(
+            { _id: userSession.userId },
+            {
+              $set: {
+                name: req.body.name,
+                email: req.body.email,
+                mobile: req.body.mobile,
+                password: spassword
+              },
+            }
+          );
+          res.redirect('/dashboard');
         }
-      );
-      res.redirect('/dashboard');
-    }}}
+      }
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -701,36 +689,55 @@ const loadCheckout = async (req, res) => {
       const addressData = await Address.find({ userId: userSession.userId });
       const selectAddress = await Address.findOne({ _id: id });
       const category = await Category.find()
-      var cartLength = userData.cart.item.length;
-     
-    
-
+      const couponData = await Coupon.find()
       console.log(selectAddress);
-      
 
+
+
+
+      noCoupon = false
       if (userSession.couponTotal == 0) {
         //update coupon
         userSession.couponTotal = userData.cart.totalPrice;
+        noCoupon = true
       }
+
 
       res.render("checkout", {
         isLoggedIn,
         id: userSession.userId,
         cartProducts: completeUser.cart,
         addSelect: selectAddress,
-        couponTotal:userSession.couponTotal,
+        couponTotal: userSession.couponTotal,
         userAddress: addressData,
+        cartLength: userData.cart.item.length,
+        couponData,
+        offer: userSession.offer,
         category,
         userName,
-        length:cartLength
-      });
+        noCoupon
+        // length:cartLength
+      })
     } else {
-      res.render("checkout", { isLoggedIn, id: userSession.userId,userName,cartLength,addSelect:false,userAddress:false,couponTotal:false,cartProducts:false });
+      const couponData = await Coupon.find()
+      res.render("checkout", { 
+        isLoggedIn, 
+        id: userSession.userId,
+         userName,
+          cartLength,
+           addSelect: false, 
+           userAddress: false,
+            couponTotal: cart.totalPrice, 
+            cartProducts: completeUser.cart,
+             couponData, offer: userSession.offer,
+              noCoupon:true,
+              userData });
     }
+
   } catch (error) {
     console.log(error.message);
   }
-};
+}
 
 const storeOrder = async (req, res) => {
   try {
@@ -738,391 +745,409 @@ const storeOrder = async (req, res) => {
     if (userSession.userId) {
       const userData = await User.findById({ _id: userSession.userId });
       const completeUser = await userData.populate("cart.item.productId");
-      
+      let order
 
       if (completeUser.cart.totalPrice > 0) {
-        const order = Orders({
-          userId: userSession.userId,
-          payment: req.body.payment,
-          firstname: req.body.firstname,
-          lastname: req.body.lastname,
-          country: req.body.country,
-          address: req.body.address,
-          city: req.body.city,
-          state: req.body.state,
-          zip: req.body.zip,
-          mobile: req.body.phone,
-          products: completeUser.cart,
-          offer: userSession.offer,
-          discount: userSession.offer.discount,
-          amount:completeUser.cart.totalPrice
-        });
-       
-        const orderProductStatus = [];
-        for (const key of order.products.item) {
-          orderProductStatus.push(0);
-        }
-        order.productReturned = orderProductStatus;
-
-        const orderData = await order.save();
-        
-        console.log(orderData);
-        userSession.currentOrder = orderData._id;
-
-        req.session.currentOrder = order._id;
-
-        const ordern = await Orders.findById({ _id: userSession.currentOrder });
-        const productDetails = await productModel.find({ is_available: 1 });
-        for (let i = 0; i < productDetails.length; i++) {
-          for (let j = 0; j < ordern.products.item.length; j++) {
-            if (
-              productDetails[i]._id.equals(ordern.products.item[j].productId)
-            ) {
-              productDetails[i].sales += ordern.products.item[j].qty;
-            }
+        if (couponTotal > 0) {
+           order = Orders({
+            userId: userSession.userId,
+            payment: req.body.payment,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            country: req.body.country,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            mobile: req.body.phone,
+            products: completeUser.cart,
+            offer: userSession.offer,
+            discount: userSession.totalPrice-couponTotal,
+            amount:couponTotal
+          })
+          }else {
+             order = Orders({
+              userId: userSession.userId,
+              payment: req.body.payment,
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
+              country: req.body.country,
+              address: req.body.address,
+              city: req.body.city,
+              state: req.body.state,
+              zip: req.body.zip,
+              mobile: req.body.phone,
+              products: completeUser.cart,
+              noCoupon:true,
+              amount: userData.cart.totalPrice
+            })
           }
-          productDetails[i].save();
-        }
+
+          const orderProductStatus = [];
+          for (const key of order.products.item) {
+            orderProductStatus.push(0);
+          }
+          order.productReturned = orderProductStatus;
+
+          const orderData = await order.save();
+
+          console.log(orderData);
+          userSession.currentOrder = orderData._id;
+
+          req.session.currentOrder = order._id;
+
+          const ordern = await Orders.findById({ _id: userSession.currentOrder });
+          const productDetails = await productModel.find({ is_available: 1 });
+          for (let i = 0; i < productDetails.length; i++) {
+            for (let j = 0; j < ordern.products.item.length; j++) {
+              if (
+                productDetails[i]._id.equals(ordern.products.item[j].productId)
+              ) {
+                productDetails[i].sales += ordern.products.item[j].qty;
+              }
+            }
+            productDetails[i].save();
+          }
 
           const offerUpdate = await Coupon.updateOne(
             { name: userSession.offer.name },
             { $push: { usedBy: userSession.userId } }
           )
-        
-        console.log(req.body.payment);
-      
-        if (req.body.payment == "Cash-on-Dilevery") {
-          
-          res.redirect("/orderSuccess");
-        } else if (req.body.payment == "RazorPay") {
-          res.render("razorpay", {
-            isLoggedIn,
-            userId: userSession.userId,
-            total: completeUser.cart.totalPrice,
-          });
+
+          console.log(req.body.payment);
+
+          if (req.body.payment == "Cash-on-Dilevery") {
+
+            res.redirect("/orderSuccess");
+          } else if (req.body.payment == "RazorPay") {
+            res.render("razorpay", {
+              isLoggedIn,
+              userId: userSession.userId,
+              total: completeUser.cart.totalPrice,
+            });
+          } else {
+            res.redirect("/checkout");
+          }
         } else {
-          res.redirect("/checkout");
+          res.redirect("/viewProduct");
         }
       } else {
-        res.redirect("/viewProduct");
+        res.redirect("/login");
       }
-    } else {
-      res.redirect("/login");
+    } catch (error) {
+      console.log(error.message);
     }
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+  };
 
-const razorpayCheckout = async (req, res) => {
-  userSession = req.session;
-  const userData = await User.findById({ _id: userSession.userId });
-  const completeUser = await userData.populate("cart.item.productId");
-  var instance = new Razorpay({
-    key_id:process.env.key_id,
-    key_secret:process.env.key_secret,
-  });
-  console.log(req.body);
-  console.log(completeUser.cart.totalPrice);
-  let order = await instance.orders.create({
-    amount: completeUser.cart.totalPrice * 100,
-    currency: "INR",
-    receipt: "receipt#1",
-  });
-  res.status(201).json({
-    success: true,
-    order,
-  });
-};
-
-const loadSuccess = async (req, res) => {
-  try {
-
+  const razorpayCheckout = async (req, res) => {
     userSession = req.session;
-
-    if (userSession.userId) {
-      const userData = await User.findById({ _id: userSession.userId });
-      const productData = await productModel.find();
-      for (const key of userData.cart.item) {
-        // console.log(key.productId, ' + ', key.qty)
-        for (const prod of productData) {
-          if (new String(prod._id).trim() == new String(key.productId).trim()) {
-            prod.quantity = prod.quantity - key.qty;
-            await prod.save();
-          }
-        }
-      }
-      // await Orders.updateOne({
-      //   userId: userSession.userId,
-      // });
-      // userId: userSession.userId,
-      await Orders.updateOne(
-        {  _id: userSession.currentOrder },
-        { $set: { status: "Build" } }
-      );
-      await User.updateOne(
-        { _id: userSession.userId },
-        {
-          $set: {
-            "cart.item": [],
-            "cart.totalPrice": "0",
-          },
-        },
-        { multi: true }
-      );
-      console.log("Order Built and Cart is Empty.");
-    }
-    userSession.couponTotal = 0;
-    res.render("orderSuccess", {
-      orderId: userSession.currentOrder,
+    const userData = await User.findById({ _id: userSession.userId });
+    const completeUser = await userData.populate("cart.item.productId");
+    var instance = new Razorpay({
+      key_id: process.env.key_id,
+      key_secret: process.env.key_secret,
     });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+    console.log(req.body);
+    console.log(completeUser.cart.totalPrice);
+    let order = await instance.orders.create({
+      amount: completeUser.cart.totalPrice * 100,
+      currency: "INR",
+      receipt: "receipt#1",
+    });
+    res.status(201).json({
+      success: true,
+      order,
+    });
+  };
 
-const currentBanner = async (req, res) => {
-  try {
-    const id = req.query.id;
-    await Banner.findOneAndUpdate({ is_active: 1 }, { $set: { is_active: 0 } });
-    await Banner.findByIdAndUpdate({ _id: id }, { $set: { is_active: 1 } });
-    res.redirect("/admin/loadBanners");
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+  const loadSuccess = async (req, res) => {
+    try {
 
+      userSession = req.session;
 
-
-const userForgotPassword = async (req, res) => {
-  try {
-    userSession = req.session
-    if (userSession.userId) {
-      const userData = await User.findById({ _id: userSession.userId })
-      if (userData.is_verified === 1) {
-        res.render('home',)
-      } else {
-        res.render('login')
-      }
-    } else {
-      res.render('forgotpassword', { isLoggedIn: false, forgotpassword: true, checkuser: false, otp: false, user: false, changepassword: false })
-    }
-  } catch (error) {
-    console.log(error.message)
-  }
-}
-
-const checkUser = async (req, res) => {
-  try {
-    userSession = req.session
-    if (userSession.userId) {
-      res.render('home')
-    } else {
-      const email = req.body.email
-      userEmail = email
-      const userDataOne = await User.findOne({ email: email })
-      userOne = userDataOne
-      if (userDataOne) {
-        const otp = sendMessage(userDataOne.mobile, res)
-        newOtp = otp
-        console.log('otp:', otp)
-        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: false, changepassword: false })
-      } else {
-        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: true, checkuser: false, otp: false, user: false, message: 'User not found', changepassword: false })
-      }
-    }
-  } catch (error) {
-    console.log(error.message)
-  }
-}
-
-const sentOtp = async (req, res) => {
-  try {
-    userSession = req.session
-    if (userSession.userId) {
-      res.render('home')
-    } else {
-      const otp = newOtp
-      console.log(otp)
-      const userData = req.body.user
-      const otpBody = req.body.otp
-      if (otpBody == otp) {
-        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: false, otp: true, user: userData, changepassword: true })
-      } else {
-        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: userData, changepassword: false, message: 'Invalid Otp' })
-
-      }
-    }
-  } catch (error) {
-    console.log(error.message)
-  }
-}
-
-const changepassword = async (req, res) => {
-  try {
-    userSession = req.session
-    if (userSession.userId) {
-      res.render('home')
-    } else {
-      const password1 = req.body.password1
-      const password2 = req.body.password2
-      const user = userEmail
-      console.log('userEmail: ' + user)
-      if (password1 === password2) {
-        const sPassword = await securePassword(password1)
-        console.log('sPassword')
-        const userData = await User.findOneAndUpdate({ email: user }, {
-          $set: {
-            password: sPassword
+      if (userSession.userId) {
+        const userData = await User.findById({ _id: userSession.userId });
+        const productData = await productModel.find();
+        for (const key of userData.cart.item) {
+          // console.log(key.productId, ' + ', key.qty)
+          for (const prod of productData) {
+            if (new String(prod._id).trim() == new String(key.productId).trim()) {
+              prod.quantity = prod.quantity - key.qty;
+              await prod.save();
+            }
           }
-        })
-        if (userData) {
-          res.redirect('login')
+        }
+        // await Orders.updateOne({
+        //   userId: userSession.userId,
+        // });
+        // userId: userSession.userId,
+        await Orders.updateOne(
+          { _id: userSession.currentOrder },
+          { $set: { status: "Build" } }
+        );
+        await User.updateOne(
+          { _id: userSession.userId },
+          {
+            $set: {
+              "cart.item": [],
+              "cart.totalPrice": "0",
+            },
+          },
+          { multi: true }
+        );
+        console.log("Order Built and Cart is Empty.");
+      }
+      userSession.couponTotal = 0;
+      res.render("orderSuccess", {
+        orderId: userSession.currentOrder,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const currentBanner = async (req, res) => {
+    try {
+      const id = req.query.id;
+      await Banner.findOneAndUpdate({ is_active: 1 }, { $set: { is_active: 0 } });
+      await Banner.findByIdAndUpdate({ _id: id }, { $set: { is_active: 1 } });
+      res.redirect("/admin/loadBanners");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
+  const userForgotPassword = async (req, res) => {
+    try {
+      userSession = req.session
+      if (userSession.userId) {
+        const userData = await User.findById({ _id: userSession.userId })
+        if (userData.is_verified === 1) {
+          res.render('home',)
+        } else {
+          res.render('login')
         }
       } else {
-        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: userData, changepassword: false, message: 'Passwords mismatch' })
+        res.render('forgotpassword', { isLoggedIn: false, forgotpassword: true, checkuser: false, otp: false, user: false, changepassword: false })
       }
+    } catch (error) {
+      console.log(error.message)
     }
-  } catch (error) {
-    console.log(error.message)
   }
-}
 
-const loadShop = async (req, res) => {
-  try {
-    userSession = req.session
-    const id = userSession.userId;
-    if(id){
-    const userData=await User.findById({_id:id})
-    var cartLength = userData.cart.item.length;
-    
-    console.log(userData.name)
-    isLoggedIn=true
-    }else{
-      isLoggedIn=false
+  const checkUser = async (req, res) => {
+    try {
+      userSession = req.session
+      if (userSession.userId) {
+        res.render('home')
+      } else {
+        const email = req.body.email
+        userEmail = email
+        const userDataOne = await User.findOne({ email: email })
+        userOne = userDataOne
+        if (userDataOne) {
+          const otp = sendMessage(userDataOne.mobile, res)
+          newOtp = otp
+          console.log('otp:', otp)
+          res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: false, changepassword: false })
+        } else {
+          res.render('forgotpassword', { isLoggedIn: false, forgotpassword: true, checkuser: false, otp: false, user: false, message: 'User not found', changepassword: false })
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
     }
-  
-    let search = ''
-    if (req.query.search) {
-      search = req.query.search
-    }
-    let page = 1
-    if (req.query.page) {
-      page = req.query.page
-    }
-    const limit = 6
-    
-    const productShop = await productModel.find({
-      is_available: 1,
-      $or: [
-        { name: { $regex: '.*' + search + '.*', $options: 'i' } },
-        { name: { $regex: '.*' + search + '.*', $options: 'i' } }
-      ]
-    })
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .exec()
-    const count = await productModel.find({
-      is_available: 1,
-      $or: [
-        { name: { $regex: '.*' + search + '.*', $options: 'i' } },
-        { name: { $regex: '.*' + search + '.*', $options: 'i' } }
-      ]
-    }).countDocuments()
-
-    const categoryData = await Category.find({is_active: 1})
-    
-    const ID = req.query.id
-    // console.log(categoryData)
-
-    const data = await Category.findOne({ _id: ID })
-    const category = await Category.find()
-    if (data) {
-      const productData = await productModel.find({ category: data.name })
-      console.log(productData)
-      res.render('viewProduct', {
-        // products: productData,
-        productShop,
-        isLoggedIn,
-        cat: categoryData,
-        category,
-        length:cartLength,
-         userName:userData.name,
-        totalPages: Math.ceil(count / limit),
-        currentPage: page,
-        previous: new Number(page) - 1,
-        next: new Number(page) + 1
-      })
-    } else {
-      // const productData = await Product.find()
-      res.render('viewProduct', {
-        isLoggedIn,
-        cat: categoryData,
-        // products: productData,
-        productShop,
-        category,
-        length:cartLength,
-        
-        
-        
-      
-        id: userSession.userId,
-        totalPages: Math.ceil(count / limit),
-        currentPage: page,
-        previous: new Number(page) - 1,
-        next: new Number(page) + 1
-      })
-    }
-  } catch (error) {
-    console.log(error.message)
   }
-}
+
+  const sentOtp = async (req, res) => {
+    try {
+      userSession = req.session
+      if (userSession.userId) {
+        res.render('home')
+      } else {
+        const otp = newOtp
+        console.log(otp)
+        const userData = req.body.user
+        const otpBody = req.body.otp
+        if (otpBody == otp) {
+          res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: false, otp: true, user: userData, changepassword: true })
+        } else {
+          res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: userData, changepassword: false, message: 'Invalid Otp' })
+
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const changepassword = async (req, res) => {
+    try {
+      userSession = req.session
+      if (userSession.userId) {
+        res.render('home')
+      } else {
+        const password1 = req.body.password1
+        const password2 = req.body.password2
+        const user = userEmail
+        console.log('userEmail: ' + user)
+        if (password1 === password2) {
+          const sPassword = await securePassword(password1)
+          console.log('sPassword')
+          const userData = await User.findOneAndUpdate({ email: user }, {
+            $set: {
+              password: sPassword
+            }
+          })
+          if (userData) {
+            res.redirect('login')
+          }
+        } else {
+          res.render('forgotpassword', { isLoggedIn: false, forgotpassword: false, checkuser: true, otp: false, user: userData, changepassword: false, message: 'Passwords mismatch' })
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const loadShop = async (req, res) => {
+    try {
+      userSession = req.session
+      const id = userSession.userId;
+      if (id) {
+        const userData = await User.findById({ _id: id })
+        var cartLength = userData.cart.item.length;
+
+        console.log(userData.name)
+        isLoggedIn = true
+      } else {
+        isLoggedIn = false
+      }
+
+      let search = ''
+      if (req.query.search) {
+        search = req.query.search
+      }
+      let page = 1
+      if (req.query.page) {
+        page = req.query.page
+      }
+      const limit = 6
+
+      const productShop = await productModel.find({
+        is_available: 1,
+        $or: [
+          { name: { $regex: '.*' + search + '.*', $options: 'i' } },
+          { name: { $regex: '.*' + search + '.*', $options: 'i' } }
+        ]
+      })
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec()
+      const count = await productModel.find({
+        is_available: 1,
+        $or: [
+          { name: { $regex: '.*' + search + '.*', $options: 'i' } },
+          { name: { $regex: '.*' + search + '.*', $options: 'i' } }
+        ]
+      }).countDocuments()
+
+      const categoryData = await Category.find({ is_active: 1 })
+
+      const ID = req.query.id
+      // console.log(categoryData)
+
+      const data = await Category.findOne({ _id: ID })
+      const category = await Category.find()
+      if (data) {
+        const productData = await productModel.find({ category: data.name })
+        console.log(productData)
+        res.render('viewProduct', {
+          // products: productData,
+          productShop,
+          isLoggedIn,
+          cat: categoryData,
+          category,
+          length: cartLength,
+          userName: userData.name,
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
+          previous: new Number(page) - 1,
+          next: new Number(page) + 1
+        })
+      } else {
+        // const productData = await Product.find()
+        res.render('viewProduct', {
+          isLoggedIn,
+          cat: categoryData,
+          // products: productData,
+          productShop,
+          category,
+          length: cartLength,
+
+
+
+
+          id: userSession.userId,
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
+          previous: new Number(page) - 1,
+          next: new Number(page) + 1
+        })
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
 
 
 
 
-module.exports = {
-  loadLanding,
-  loadLogin,
-  loadRegister,
-  userLogout,
-  insertUser,
-  loadHome,
-  
-  verifyLogin,
-  loadShop,
-  
-  addToCart,
-  deleteCart,
-  loadCart,
-  singleProduct,
-  loadWishlist,
-  addToWishlist,
-  addCartdelWishlist,
-  deleteWishlist,
-  loadCheckout,
-  addAddress,
-  deleteAddress,
-  sendMessage,
-  loadOtp,
-  verifyOtp,
-  userDashboard,
-  cancelOrder,
-  viewOrder,
-  storeOrder,
-  returnProduct,
-  razorpayCheckout,
-  loadSuccess,
-  getCategoryProduct,
-  currentBanner,
-  // editQuantity,
-  changeProductQnty,
-  userForgotPassword,
-  changepassword,
-  checkUser,
-  sentOtp,
-  addCoupon,
-  editUser
+  module.exports = {
+    loadLanding,
+    loadLogin,
+    loadRegister,
+    userLogout,
+    insertUser,
+    loadHome,
 
-};
+    verifyLogin,
+    loadShop,
+
+    addToCart,
+    deleteCart,
+    loadCart,
+    singleProduct,
+    loadWishlist,
+    addToWishlist,
+    addCartdelWishlist,
+    deleteWishlist,
+    loadCheckout,
+    addAddress,
+    deleteAddress,
+    sendMessage,
+    loadOtp,
+    verifyOtp,
+    userDashboard,
+    cancelOrder,
+    viewOrder,
+    storeOrder,
+    returnProduct,
+    razorpayCheckout,
+    loadSuccess,
+    getCategoryProduct,
+    currentBanner,
+    // editQuantity,
+    changeProductQnty,
+    userForgotPassword,
+    changepassword,
+    checkUser,
+    sentOtp,
+    addCoupon,
+    editUser
+
+  };

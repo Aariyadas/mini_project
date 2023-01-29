@@ -49,6 +49,7 @@ admin_route.get('/show-category', adminController.showCategory)
 
 admin_route.get('/adminOrder',adminMiddleware.isLogin,adminController.viewOrder)
 admin_route.post("/adminOrder",adminController.updateOrderStatus)
+admin_route.get('/orderDetails', adminController.adminOrderDetails);
 
 
 
@@ -59,6 +60,7 @@ admin_route.get('/currentBanner',adminController.currentBanner)
 
 admin_route.get('/admin-offer',adminMiddleware.isLogin,adminController.adminLoadOffer);
 admin_route.post('/admin-offer',adminController.adminAddOffer);
+
 admin_route.get('/couponlist', adminController.loadCoupon)
 admin_route.get('/show-coupon', adminController.showCoupon)
 admin_route.get('/block-coupon', adminController.blockCoupon)

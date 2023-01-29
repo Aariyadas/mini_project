@@ -128,8 +128,14 @@
                                                         <td><%= key.createdAt.toDateString() %></td>
                                                         <td><%= key.payment %></td>
                                                         <td><%= key.status %></td>
+                                                       <% if((key.status!="Delivered")&&(key.status!="Canceled")){%>
                                                         <td><a href="/cancelOrder?id=<%= key._id %>" class="btn btn-outline-primary-2">Cancel Order</a><br>
                                                         <a href="/viewOrder?id=<%= key._id %>" class="btn btn-primary ms-2 ">View Details</a></td>
+                                                        <%} else{%>
+                                                            <td><a href="/viewOrder?id=<%= key._id %>" class="btn btn-primary ms-2 ">View Details</a></td>
+                                                            <% } %>
+                                                        
+                                                        
                                                       </tr>
                                                     </tbody>
                                                     <% } %>

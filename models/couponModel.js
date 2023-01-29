@@ -13,6 +13,9 @@ const offerSchema = new mongoose.Schema({
     minimumBill:{
         type:Number,
     },
+    expirydate: {
+        type: String,
+    },
     discount:{
         type:Number,
         required:true

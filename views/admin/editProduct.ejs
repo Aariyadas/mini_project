@@ -28,7 +28,7 @@
 
           <div class="mb-4 form-floating">
             <label for="floatingInput">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Product Name" requiredrequired value="<%=product.name%>">
+            <input type="text" name="name" class="form-control" placeholder="Product Name" required value="<%=product.name%>">
 
           </div>
           <div class="d-flex flex-row align-items-center mb-4">
@@ -36,10 +36,10 @@
             <div class="form-outline flex-fill mb-0">
               <label class="form-label  select-label" for="form3Example1c">Category</label>
               <select name="category" class="form-control" required>
-                <option value="" disabled selected>Select a category</option>
+                <option value="" disabled selected><%=product.category%></option>
                 <% if(category){ %>
                 <% for(let i=1;i <=category.length; i++){ %>
-                <option value="<%= category[i-1].name %>">
+                <option value="<%= category[i-1]._id %>">
                   <%= category[i-1].name %>
                 </option>
                 <% } %>
@@ -50,27 +50,36 @@
             </div>
           </div>
           <div class="mb-4 form-floating">
-            <!-- <label for="floatingPassword">Price</label> -->
+            <label for="floatingPassword">Price</label> 
             <input type="text" name="price" class="form-control" id="floatingPassword" required value="<%=product.price%>">
           </div>
           <div class="mb-4 form-floating">
-            <!-- <label for="floatingPassword">Quantity</label> -->
+             <label for="floatingPassword">Quantity</label> 
             <input type="text" name="quantity" class="form-control" id="floatingPassword" required value="<%=product.quantity%>">
           </div>
           <div class="mb-4 form-floating">
-            <!-- <label for="floatingInput">Product Description</label> -->
+            <label for="floatingInput">Product Description</label> 
             <input type="text" name="description" class="form-control" id="floatingInput2" required value=" <%=product. description%>" style="height:7rem;">
           </div>
-          <div class="form-outline flex-fill mb-0">
+          <!-- <div class="form-outline flex-fill mb-0">
             <label class="form-label" for="form3Example1c">Rating</label>
-            <input type="number" id="form3Example1c" class="form-control" name="rating" max="5" required value=" <%=product.rating%>">
+            <input type="number" id="rating" class="form-control" name="rating" required value="<%=product. rating%> "
+                >
 
-          </div>
+        </div> -->
+        <div class="mb-4 form-floating">
+          <label for="floatingInput">Rating</label> 
+          <input type="text" name="rating" class="form-control" id="floatingInput2" required value=" <%=product.rating%>" >
+        </div>
 
 
           <div class="mb-4 form-floating">
             <label for="floatingInput">Image</label>
-            <input type="file" name="uploaded_file" class="form-control" id="formFileMultiple" accept="image/png, image/gif, image/jpeg" multiple />
+            <img src="/banners/<%=product.image[0]%>" height="75vh" width="75vh">
+                                            <img src="/banners/<%=product.image[1]%>" height="75vh" width="75vh">
+                                            <img src="/banners/<%=product.image[2]%>" height="75vh" width="75vh">
+                                           
+            <input type="file" name="uploaded_file" class="form-control" id="formFileMultiple" accept="image/png, image/gif, image/jpeg" multiple required  />
           </div>
 
           <div class="d-flex flex-row align-items-center mb-4">
