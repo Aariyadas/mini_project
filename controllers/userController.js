@@ -357,10 +357,29 @@ const addCoupon = async (req, res) => {
       // console.log("coupon name :"+ offername)
       // console.log(offerData)
       if (offerData) {
-        console.log(offerData)
+        if (offerData.usedBy.includes(userSession.userId)){
+         console.log('useerBy includes')
+          
+          noCoupon = true
+          userSession.offer.usedBy = true
+          couponTotal=userData.cart.totalPrice
+          const category = await Category.find()
+          res.render('checkout',{ isLoggedIn,
+            id: userSession.userId,
+            cartProducts: completeUser.cart,
+            addSelect: selectAddress,
+            couponTotal: userSession.couponTotal,
+            userAddress: addressData,
+            
+            couponData,
+            offer: userSession.offer,
+            category,
+            userName:userData.name,
+            noCoupon})
 
-        if (offerData.usedBy != userSession.userId) {
-          console.log(userSession);
+
+        } else {
+          console.log('UserSession : '+userSession.userId);
           noCoupon = false
           userSession.offer.name = offerData.name
           userSession.offer.type = offerData.type
@@ -376,14 +395,6 @@ const addCoupon = async (req, res) => {
             couponTotal = updatedTotal
             res.redirect('/checkout')
           }
-          
-
-
-        } else {
-          noCoupon = true
-          userSession.offer.usedBy = true
-          couponTotal=userData.cart.totalPrice
-          res.redirect('/checkout')
         }
 
       } else {
@@ -536,6 +547,7 @@ const viewOrder = async (req, res) => {
       const userData = await User.find({ id: userSession.userId });
       await orderData.populate("products.item.productId");
       const couponData = await Coupon.find()
+      console.log(userSession.couponTotal)
       res.render("viewOrder", {
 
         order: orderData,
@@ -748,7 +760,7 @@ const storeOrder = async (req, res) => {
       let order
 
       if (completeUser.cart.totalPrice > 0) {
-        if (couponTotal > 0) {
+        if (userSession.couponTotal > 0) {
            order = Orders({
             userId: userSession.userId,
             payment: req.body.payment,
@@ -763,7 +775,7 @@ const storeOrder = async (req, res) => {
             products: completeUser.cart,
             offer: userSession.offer,
             discount: userSession.totalPrice-couponTotal,
-            amount:couponTotal
+            amount:userSession.couponTotal
           })
           }else {
              order = Orders({
@@ -778,7 +790,6 @@ const storeOrder = async (req, res) => {
               zip: req.body.zip,
               mobile: req.body.phone,
               products: completeUser.cart,
-              noCoupon:true,
               amount: userData.cart.totalPrice
             })
           }
