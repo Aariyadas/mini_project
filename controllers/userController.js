@@ -22,7 +22,7 @@ let offer = {
   discount: 0,
   usedBy: false
 }
-let couponTotal = 0
+let couponTotal
 let noCoupon;
 let newUser;
 let newOtp;
@@ -223,7 +223,7 @@ const getCategoryProduct = async (req, res) => {
     var userName = req.session.userName;
     const userData = await User.find({ _id: userId });
     const categor = req.query.category;
-
+    console.log(categor)
 
     const category = await Category.find()
     const products = await productModel.find({ category: categor });
@@ -318,6 +318,8 @@ const addToCart = async (req, res, next) => {
       const userData = await User.findById({ _id: userSession.userId });
       const productData = await productModel.findById({ _id: productId });
       userData.addToCart(productData);
+      couponTotal=0
+      userSession.couponTotal=null
       res.redirect("/cart");
     } else {
       res.redirect("/login");
@@ -362,6 +364,7 @@ const addCoupon = async (req, res) => {
           
           noCoupon = true
           userSession.offer.usedBy = true
+          userSession.couponTotal=userData.cart.totalPrice
           couponTotal=userData.cart.totalPrice
           const category = await Category.find()
           res.render('checkout',{ isLoggedIn,
@@ -572,9 +575,7 @@ const cancelOrder = async (req, res) => {
       const id = req.query.id;
       console.log(id);
       const orderData = await Orders.findByIdAndUpdate({ _id: id },{$set:{status:'Canceled'}});
-      if(orderData){
       res.redirect("/viewOrder");
-      }
     } else {
       res.redirect("/login");
     }
@@ -718,7 +719,7 @@ const loadCheckout = async (req, res) => {
       res.render("checkout", {
         isLoggedIn,
         id: userSession.userId,
-        cartProducts: completeUser.cart,
+        cartProducts: userData.cart,
         addSelect: selectAddress,
         couponTotal: userSession.couponTotal,
         userAddress: addressData,
@@ -758,41 +759,45 @@ const storeOrder = async (req, res) => {
       const userData = await User.findById({ _id: userSession.userId });
       const completeUser = await userData.populate("cart.item.productId");
       let order
+      console.log(completeUser.cart.totalPrice)
+      console.log(userData.cart.totalPrice)
 
       if (completeUser.cart.totalPrice > 0) {
-        if (userSession.couponTotal > 0) {
-           order = Orders({
-            userId: userSession.userId,
-            payment: req.body.payment,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            country: req.body.country,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            zip: req.body.zip,
-            mobile: req.body.phone,
-            products: completeUser.cart,
-            offer: userSession.offer,
-            discount: userSession.totalPrice-couponTotal,
-            amount:userSession.couponTotal
-          })
-          }else {
-             order = Orders({
-              userId: userSession.userId,
-              payment: req.body.payment,
-              firstname: req.body.firstname,
-              lastname: req.body.lastname,
-              country: req.body.country,
-              address: req.body.address,
-              city: req.body.city,
-              state: req.body.state,
-              zip: req.body.zip,
-              mobile: req.body.phone,
-              products: completeUser.cart,
-              amount: userData.cart.totalPrice
-            })
-          }
+        if(userSession.couponTotal){
+        order = Orders({
+          userId: userSession.userId,
+          payment: req.body.payment,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          country: req.body.country,
+          address: req.body.address,
+          city: req.body.city,
+          state: req.body.state,
+          zip: req.body.zip,
+          mobile: req.body.phone,
+          products: completeUser.cart,
+          offer: userSession.offer,
+          discount: userSession.totalPrice-couponTotal,
+          amount:userSession.couponTotal
+        })
+      }else{
+        order = Orders({
+          userId: userSession.userId,
+          payment: req.body.payment,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          country: req.body.country,
+          address: req.body.address,
+          city: req.body.city,
+          state: req.body.state,
+          zip: req.body.zip,
+          mobile: req.body.phone,
+          products: completeUser.cart,
+          offer: userSession.offer,
+          discount: userSession.totalPrice-couponTotal,
+          amount:completeUser.cart.totalPrice
+      })
+    }
 
           const orderProductStatus = [];
           for (const key of order.products.item) {
@@ -834,7 +839,7 @@ const storeOrder = async (req, res) => {
             res.render("razorpay", {
               isLoggedIn,
               userId: userSession.userId,
-              total: completeUser.cart.totalPrice,
+              total: userSession.couponTotal,
             });
           } else {
             res.redirect("/checkout");

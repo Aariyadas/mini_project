@@ -37,7 +37,7 @@
                 <option value="" disabled selected>Select a category</option>
                 <% if(category){ %>
                 <% for(let i=1;i <=category.length; i++){ %>
-                <option value="<%= category[i-1]._id %>">
+                <option value="<%= category[i-1].name %>">
                   <%= category[i-1].name %>
                 </option>
                 <% } %>

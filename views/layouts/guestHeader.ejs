@@ -78,7 +78,7 @@
                             <% if(typeof category!="undefined" ){ %>
                                 <% for(let i=0;i<category.length;i++){ %>
                                     <a class="dropdown-item"
-                                        href="/categoryProduct?category=<%= category[i]._id %> %> ">
+                                        href="/categoryProduct?category=<%= category[i].name %> %> ">
                                         <%= category[i].name %>
                                     </a>
                                     <% } %>

@@ -436,7 +436,8 @@ const editCategory = async (req, res) => {
       adminSession = req.session
       if (adminSession.adminId) {
         const id = req.query.id
-        const categoryData = await Category.findById({ _id: id })
+        console.log("id:" +id)
+        const categoryData = await Category.findOne({ name :id})
         res.render('editcategory', { category: categoryData })
       } else {
         res.redirect('/admin/login')
