@@ -10,6 +10,7 @@ User side:
 - View Product
 - Wishlist
 - Cart management
+- Single Product(Multiple images using multer)
 - Profile
 - Manage login credentials and shipping addresses
 - Multiple Address Managment
